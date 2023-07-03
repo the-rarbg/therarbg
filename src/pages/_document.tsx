@@ -1,4 +1,4 @@
-import Document, {  Html, Main, NextScript } from 'next/document';
+import Document, {  Head, Html, Main, NextScript } from 'next/document';
 
 import { AppConfig } from '@/utils/AppConfig';
 import Header from '@/Common/Header';
@@ -9,7 +9,9 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang={AppConfig.locale}>
-      
+       <Head>
+       <meta name="description" content="Welcome to Payme" />
+       </Head>
         <body>
          <Header/>
           <Main />
