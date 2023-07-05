@@ -1,4 +1,4 @@
-import { Meta } from '@/layouts/Meta';
+
 import Home from './home';
 
 const Index = () => {
