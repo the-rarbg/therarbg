@@ -46,7 +46,7 @@ Built-in feature from Next.js:
 - 🚀 Production-ready
 
 ### Requirements
-
+- Use Node 19.9.0
 - Node.js 19+ and npm
 
 ### Getting started
