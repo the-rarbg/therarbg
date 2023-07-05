@@ -19,3 +19,20 @@ a:hover {
 .content ul {
   @apply my-6;
 }
+
+input[type="checkbox"]{
+ 
+    appearance: none;
+    cursor:pointer;
+    border: solid 1px #4ade80;
+    width: 14px;
+    height: 14px;
+    margin-top: 4.5px
+    }
+
+input[type=checkbox]:checked {
+    content:\2713;
+    color:#7AFFB8;
+    /* or whatever styles you want depending on your design */
+    /* be as obvious as possible that it's a checkbox and that it's checked! */
+}
