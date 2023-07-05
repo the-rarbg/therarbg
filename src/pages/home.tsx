@@ -31,7 +31,7 @@ const Home = () => {
           <br />
           <br />
 
-          <div className='w-7/12 mx-auto  text-center grid grid-cols-4 gap-4'>
+          <div className='w-8/12 mx-auto  text-center grid grid-cols-4 gap-4'>
       
             {data.map((item, index) => {
               return (
