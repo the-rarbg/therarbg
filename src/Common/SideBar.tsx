@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const SideBar = () => {
   return (
@@ -9,7 +9,7 @@ const SideBar = () => {
         <h1>ksjfh</h1>
       </nav>
     </div>
-  )
-}
+  );
+};
 
-export default SideBar
+export default SideBar;
