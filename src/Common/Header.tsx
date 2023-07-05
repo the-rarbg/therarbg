@@ -1,19 +1,39 @@
 import React from 'react';
+import { usePathname } from 'next/navigation';
+
+const cRoutes = [
+  {
+    path: ["/","/home/"],
+    title: "Home",
+  },
+  {
+    path: ["/search/"],
+    title: "Search",
+  },
+  {
+    path: ["/sponsers/"],
+    title: "Sponsers",
+  }
+];
 const Header = () => {
+  const router = usePathname();
   return (
-    <header className="bg-green-800 text-white py-3 text-lg font-medium flex bg-gradient-to-r from-green-950 from-5% via-emerald-800 via-30% to-emerald-950 to-80% ... shadow-md">
+    <header className="bg-background-header/25 text-sm font-medium flex sticky top-0 font-montserrat backdrop-blur-3xl px-16">
 
 
 
 
-      <span className='mx-6 cursor-pointer hover:text-green-400'>theRARBG</span>
+      <span className='mx-6 cursor-pointer hover:text-green-400 text-xl font-semibold my-4'>theRARBG</span>
 
-      <div className='flex mx-auto justify-around font-normal'> 
-        <h1 className='mx-4 cursor-pointer font-normal hover:text-green-400'>HOME</h1>
-         <h1 className='mx-4 cursor-pointer font-normal hover:text-green-400'>SEARCH</h1>
-         <h1 className='mx-4 cursor-pointer font-normal hover:text-green-400'>SPONSERS</h1>
+      <div className='flex mx-auto justify-around font-normal items-center'> 
+      {/* router.pathname */}
+        {cRoutes.map((obj, i) => (
+          <div className={`px-6 uppercase cursor-pointer font-normal ${obj.path.includes(router) ? "border-b-2 border-primary" : ""} h-full flex items-center`} key={i}>
+            <p className={`${obj.path.includes(router) ? "text-primary" : ""} hover:text-green-400 h-fit`}>{obj.title}</p>
+          </div>
+        ))}
       </div>
-    <button className='mx-6 px-3 bg-green-950 text-green-400  border-green-400 text-base ' style={{border:"solid 0.5px",fontWeight:"400"}}>LOGIN</button>
+    <button className='px-5 bg-primary/10 text-primary border-primary my-4 text-xs hover:bg-primary/30' style={{border:"solid 0.5px",fontWeight:"400"}}>LOGIN</button>
     </header>
   );
 };

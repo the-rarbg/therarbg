@@ -19,7 +19,17 @@ module.exports = {
       '10xl': '10rem',
     },
     extend: {
+      fontFamily: {
+        montserrat: ["Montserrat", "sans-serif"],
+      },
+      backgroundImage: {
+        circles: "url('/assets/images/background-cicles.png')",
+      },
       colors: {
+        "background": "#0D0F0B",
+        "background-header": "#131313",
+        "primary": "#7AFFB8",
+        "off-white": "#E5E7EB",
         gray: {
           100: '#f7fafc',
           200: '#edf2f7',
