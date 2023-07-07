@@ -1,5 +1,5 @@
 import React from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 const cRoutes = [
   {
@@ -7,28 +7,30 @@ const cRoutes = [
     title: "Home",
   },
   {
-    path: ["/search/"],
+    path: ["/top-ten-post/latest/"],
     title: "Search",
   },
   {
-    path: ["/sponsers/"],
-    title: "Sponsers",
+    path: ["/about-us/"],
+    title: "About Us",
   }
 ];
+
 const Header = () => {
   const router = usePathname();
+  const route = useRouter()
   return (
     <header className="bg-background-header/25 text-sm font-medium flex sticky top-0 font-montserrat backdrop-blur-3xl px-16">
 
 
 
 
-      <span className='mx-6 cursor-pointer hover:text-green-400 text-xl font-semibold my-4'>theRARBG</span>
+      <span className='mx-6 cursor-pointer hover:text-green-400 text-xl font-semibold my-4' onClick={()=>route.push("/")}>theRARBG</span>
 
       <div className='flex mx-auto justify-around font-normal items-center'> 
       {/* router.pathname */}
         {cRoutes.map((obj, i) => (
-          <div className={`px-6 uppercase cursor-pointer font-normal ${obj.path.includes(router) ? "border-b-2 border-primary" : ""} h-full flex items-center`} key={i}>
+          <div className={`px-6 uppercase cursor-pointer font-normal ${obj.path.includes(router) ? "border-b-2 border-primary" : ""} h-full flex items-center`} onClick={()=>route.push(`${obj.path[0]}`)} key={i}>
             <p className={`${obj.path.includes(router) ? "text-primary" : ""} hover:text-green-400 h-fit`}>{obj.title}</p>
           </div>
         ))}

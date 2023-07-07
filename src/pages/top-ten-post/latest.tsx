@@ -64,22 +64,22 @@ const Latest = () => {
             <div>
             </div>
          <br/><br/><br/><br/>
-            <div className='w-8/12 mx-auto  text-center grid grid-cols-4 gap-4'>
+            <div className='w-[95%] mx-auto  text-center grid grid-cols-5 gap-4 place-items-center'>
 
             {movieList?.map((item, index) => {
               let name = item[`n`];
-               let imagesrc = item[`t`];
+           
               return (
                 <>
-                {imagesrc ? <div key={index} className="overflow-y-auto cursor-pointer w-[225px] h-[275px] pl-[10px] pr-[10px] pt-[3rem] pb-5 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30 flex-col justify-center items-center gap-3.5 inline-flex hover:bg-primary/10 hover:border-[1px] hover:border-primary/50">
-                  <div className="w-[120px] h-[120px] m-[5px] justify-center items-center inline-flex">  <Image className='mt-[15px]' src={item[`t`]} width={150} height={150} alt='movie' layout="responsive" /></div>
+                {  <div key={index} className="overflow-y-auto cursor-pointer w-[225px] h-[275px] pl-[10px] pr-[10px] pt-[3rem] pb-5 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30 flex-col justify-center items-center gap-3.5 inline-flex hover:bg-primary/10 hover:border-[1px] hover:border-primary/50">
+                  <div className="w-[120px] h-[120px] m-[5px] justify-center items-center inline-flex">  <Image className='mt-[15px]' src={item[`t`]?item[`t`]:""} width={150} height={150} alt='movie' layout="responsive" /></div>
                   <br/>
                    <div className="text-gray-200 text-opacity-80 text-[11px] h-auto w-[175px] long-and-truncated">
                    <span >
                    {name}
                    </span> 
                      </div>
-                </div>:null}
+                </div>}
                 </>
               )
             })}
