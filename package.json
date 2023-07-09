@@ -30,7 +30,11 @@
     "next-seo": "^6.0.0",
     "next-sitemap": "^4.1.3",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.8.0",
     "react-dom": "^18.2.0",
+    "react-toastify": "^9.1.3",
+    "saas": "^1.0.0",
+    "sass": "^1.63.6",
     "scss": "^0.2.4"
   },
   "devDependencies": {
