@@ -13,7 +13,7 @@ export const loginApi = (data) => {
   let url = `${API_BASE}/auth/api/v1/token/`
   return axios.post(url, data, { headers: headersApplicationJson })
 }
-export const moviesListApi = (page,category)=>{
-  let url = `${API_BASE}/get-posts/category:${category}:time:10D:format:json/?page=${page}`
+export const moviesListApi = (page, category, time) => {
+  let url = category === "false" ? `${API_BASE}/get-posts/time:${time}:format:json/?page=${page}` : `${API_BASE}/get-posts/category:${category}:time:${time}:format:json/?page=${page}`;
   return axios.get(url, { headers: headersApplicationJson })
 }

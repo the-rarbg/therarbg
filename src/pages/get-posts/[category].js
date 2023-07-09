@@ -4,11 +4,14 @@ import Image from 'next/image'
 import { moviesListApi } from '../../service/service';
 import ToastMsg from '../../Common/ToastMsg';
 import { Loader } from '../../Common/Loader';
+import { useRouter } from 'next/router';
 
 
 
 const Latest = () => {
-
+const router = useRouter()
+const {category,time} = router.query;
+const categoryId = category ? category.split(':')[1] : null;
   let data = ["Torrents", "Movie", "TV-Show", "Games", "Music", "Anime", "Books", "Other"]
 
   const [movieList, setMovieList] = useState([])
@@ -16,14 +19,13 @@ const Latest = () => {
   const[loader,setLoader]=useState(false)
 
   useEffect(() => {
-    fetchMovieList("Movies");
+    fetchMovieList(categoryId);
   
   }, [page])
 
-  const fetchMovieList = (category) => {
-    console.log("page",page)
+  const fetchMovieList = (categoryId) => {
     setLoader(true)
-    moviesListApi(page,"Movies").then((res) => { 
+    moviesListApi(page,categoryId,time).then((res) => { 
        console.log("page",res?.data?.results)
        setLoader(false)
         setMovieList([...movieList, ...res.data.results])

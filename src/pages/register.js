@@ -17,7 +17,7 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setLoader(true)
+    
     if (!formInput?.first_name) {
       ToastMsg("First Name is Required", "error")
       return;
@@ -34,10 +34,15 @@ const Register = () => {
       ToastMsg("Email is Required", "error")
       return;
     }
+    if(!formInput?.email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3}$/)){
+      ToastMsg("Enter a valid email", "error")
+      return;
+    }
     if (!formInput?.password) {
       ToastMsg("Password is Required", "error")
       return;
     }
+    setLoader(true)
     registerApi(formInput).then((res) => {
       setLoader(false)
       ToastMsg("Registration Complete", "success")

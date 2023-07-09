@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { loginApi } from '../service/service';
 import { Loader } from '../Common/Loader';
+import ToastMsg from '../Common/ToastMsg';
 
 const Login = () => {
   const router = useRouter()
@@ -13,6 +14,18 @@ const Login = () => {
   const handleSubmit =(e)=>{  
     e.preventDefault()
     
+    if (!email) {
+      ToastMsg("Email is Required", "error")
+      return;
+    }
+    if(!email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3}$/)){
+      ToastMsg("Enter a valid email", "error")
+      return;
+    }
+    if (!password) {
+      ToastMsg("Password is Required", "error")
+      return;
+    }
 let data ={email:email,password:password}
 setLoader(true)
     loginApi(data).then((res)=>{
@@ -20,7 +33,7 @@ setLoader(true)
       console.log("res",res.data.access)
       localStorage.setItem("access_token",res.data.access)
       localStorage.setItem("refresh_token",res.data.refresh)
-      router.push("/top-ten-post/latest/")
+      router.push("/")
 
     }).catch((err)=>{
       setLoader(false)

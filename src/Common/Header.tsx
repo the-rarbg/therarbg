@@ -7,7 +7,7 @@ const cRoutes = [
     title: "Home",
   },
   {
-    path: ["/top-ten-post/latest/"],
+    path: ["/get-posts/category:Movies?time:10D"],
     title: "Search",
   },
   {
