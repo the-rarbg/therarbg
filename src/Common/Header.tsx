@@ -7,7 +7,7 @@ const cRoutes = [
     title: "Home",
   },
   {
-    path: ["/top-ten-post/latest/"],
+    path: ["/get-posts/category:Movies?time:10D"],
     title: "Search",
   },
   {
@@ -35,7 +35,7 @@ const Header = () => {
           </div>
         ))}
       </div>
-    <button className='px-5 bg-primary/10 text-primary border-primary my-4 text-xs hover:bg-primary/30' style={{border:"solid 0.5px",fontWeight:"400"}}>LOGIN</button>
+    <button className='px-5 bg-primary/10 text-primary border-primary my-4 text-xs hover:bg-primary/30' style={{border:"solid 0.5px",fontWeight:"400"}} onClick={()=>route.push("/login")}  >LOGIN</button>
     </header>
   );
 };
