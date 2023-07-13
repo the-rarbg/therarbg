@@ -60,7 +60,7 @@ const Details = () => {
                      <span>{data?.leechers}</span>
                      <span>{data?.size_char}</span>
                      <span>{data?.downloads}</span>
-                     <span>{moment(data?.timestamp).format("MMMM Do YYYY, h:mm:ss a")}</span>
+                     <span>{moment(data?.timestamp).format("MMMM Do YYYY")}</span>
                      </div>
                    </div>
                 </div>
