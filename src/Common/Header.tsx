@@ -7,7 +7,7 @@ const cRoutes = [
     title: "Home",
   },
   {
-    path: ["/get-posts/category:Movies?time:10D"],
+    path: ["/get-posts/category:Movies/"],
     title: "Search",
   },
   {
@@ -19,6 +19,7 @@ const cRoutes = [
 const Header = () => {
   const router = usePathname();
   const route = useRouter()
+  console.log(router)
   return (
     <header className="bg-background-header/25 text-sm font-medium flex sticky top-0 font-montserrat backdrop-blur-3xl px-16">
 
@@ -35,7 +36,7 @@ const Header = () => {
           </div>
         ))}
       </div>
-    <button className='px-5 bg-primary/10 text-primary border-primary my-4 text-xs hover:bg-primary/30' style={{border:"solid 0.5px",fontWeight:"400"}} onClick={()=>route.push("/login")}  >LOGIN</button>
+    <button className='px-5 bg-primary/10 text-primary border-primary my-4 text-xs hover:bg-primary/30' style={{border:"solid 0.5px",fontWeight:"400"}} onClick={()=>route.push("/login")}  >Login</button>
     </header>
   );
 };

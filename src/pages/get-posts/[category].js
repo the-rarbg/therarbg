@@ -11,7 +11,8 @@ import { useRouter } from 'next/router';
 const Latest = () => {
 const router = useRouter()
 const {category,time} = router.query;
-const categoryId = category ? category.split(':')[1] : null;
+const categoryId = category ? category.split(':')[1] : "Movies";
+
   let data = ["Torrents", "Movie", "TV-Show", "Games", "Music", "Anime", "Books", "Other"]
 
   const [movieList, setMovieList] = useState([])
@@ -19,13 +20,16 @@ const categoryId = category ? category.split(':')[1] : null;
   const[loader,setLoader]=useState(false)
 
   useEffect(() => {
+   
     fetchMovieList(categoryId);
   
   }, [page])
+  
 
   const fetchMovieList = (categoryId) => {
+    let latest = time?time:"10D"
     setLoader(true)
-    moviesListApi(page,categoryId,time).then((res) => { 
+    moviesListApi(page,categoryId,latest).then((res) => { 
        console.log("page",res?.data?.results)
        setLoader(false)
         setMovieList([...movieList, ...res.data.results])
@@ -79,17 +83,21 @@ const categoryId = category ? category.split(':')[1] : null;
       <div>
       </div>
       <br /><br /><br /><br />
-      <div className='w-[95%] mx-auto  text-center grid grid-cols-5 gap-4 place-items-center'>
+      <div className='w-[90%] mx-auto  text-center grid grid-cols-6 gap-6 place-items-center'>
 
         {movieList?.map((item, index) => {
           let name = item[`n`];
 
           return (
             <>
-              {<div key={index} className="overflow-hidden cursor-pointer w-[225px] h-[275px] pl-[10px] pr-[10px] pt-[3rem] pb-5 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30 flex-col justify-center items-center gap-3.5 inline-flex hover:bg-primary/10 hover:border-[1px] hover:border-primary/50">
-                <div className="w-[120px] h-[120px] m-[5px] justify-center items-center inline-flex">  <Image className='mt-[15px]' src={item[`t`] ? item[`t`] : "https://i.therarbg.com/np.jpg"} width={150} height={150} alt='movie' layout="responsive" /></div>
+              {<div onClick={()=>{
+                let slug =  name.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '');
+                 router.push(`/post-detail/${item?.pk}/${slug}/`)
+               
+              }} key={index} className="overflow-hidden cursor-pointer w-[195px] h-[275px] pt-[3rem] pb-5 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30 flex-col justify-center items-center gap-3.5 inline-flex hover:bg-primary/10 hover:border-[1px] hover:border-primary/50">
+                <div className="w-[150px] h-[125px] m-[5px] justify-center items-center inline-flex pb-2 pt-2">  <Image className='mt-[15px]' src={item[`t`] ? item[`t`] : categoryId==="XXX"?"https://i.therarbg.com/xnp.jpg": "https://i.therarbg.com/np.jpg"} width={150} height={150} alt='movie' layout="responsive" /></div>
                 <br />
-                <div className="text-gray-200 text-opacity-80 text-[11px] h-auto w-[175px] long-and-truncated">
+                  <div className="text-gray-200 text-opacity-80 text-[11px] pt-1 h-auto w-[175px] long-and-truncated">
                   <span >
                     {name}
                   </span>
