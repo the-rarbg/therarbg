@@ -107,8 +107,8 @@ const categoryId = category ? category.split(':')[1] : "Movies";
               {<div onClick={()=>{
                 let slug =  name.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '');
                  router.push(`/post-detail/${item?.pk}/${slug}/`)
-              }} key={index} className="my-1 mx-2 overflow-hidden w-[185px] cursor-pointer py-2 bg-off-white/10 rounded-md flex-col justify-center inline-flex hover:bg-primary/10 border border-off-white/10 hover:border-primary/50">
-                <div className="w-[161px] h-[180px] bg-cover rounded mx-auto justify-center items-center inline-flex" style={{'background-image':`url("${item[`t`] ? item[`t`] : categoryId==="XXX"?"https://i.therarbg.com/xnp.jpg": "https://i.therarbg.com/np.jpg"}")`}}>
+              }} key={index} className="my-1 mx-2 overflow-hidden w-[190px] cursor-pointer py-2 bg-off-white/10 rounded-md flex-col justify-center inline-flex hover:bg-primary/10 border border-off-white/10 hover:border-primary/50">
+                <div className="w-[166px] h-[185px] bg-cover rounded mx-auto justify-center items-center inline-flex" style={{'background-image':`url("${item[`t`] ? item[`t`] : categoryId==="XXX"?"https://i.therarbg.com/xnp.jpg": "https://i.therarbg.com/np.jpg"}")`}}>
                 </div>
                 <br />
                   <div className="text-off-white text-[12px] h-auto pt-1.5 long-and-truncated font-medium w-fit break-all">
