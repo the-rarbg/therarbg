@@ -7,6 +7,18 @@ import { Loader } from '../../Common/Loader';
 import { useRouter } from 'next/router';
 
 
+function formatBytes(bytes, decimals = 2) {
+  if (!+bytes) return '0 Bytes'
+
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+}
+
 
 const Latest = () => {
 const router = useRouter()
@@ -61,21 +73,21 @@ const categoryId = category ? category.split(':')[1] : "Movies";
 
 
   return (
-    <div className='text-center'>
+    <div className='text-center font-montserrat'>
       {loader?<Loader/>:null}
       <br /> <br /> <br />
-      <p className='text-[6rem] font-bold leading-[7rem] pt-16'> Search</p>
-      <p className='leading-[0rem] font-extralight'> Browse through thousands of torrents files</p>
+      <p className='text-[6rem] font-bold leading-[6rem] pt-16'> Search</p>
+      <p className='mt-4 leading-[0rem] font-light'> Browse through thousands of torrents files</p>
       <br /><br />
-      <div className='w-1/2 mx-auto flex my-3 items-center border-b-[1px] border-primary px-1'>
+      <div className='w-10/12 md:w-1/2 mx-auto flex my-3 items-center border-b-[1px] border-primary px-1'>
         <input className='bg-transparent w-full py-4 font-light text-lg outline-none  placeholder:font-montserrat font-montserrat' placeholder='Start typing what you want ?' />
         <SearchSVG />
       </div>
-      <div className='flex text-center justify-center'>
+      <div className='mx-8 flex flex-wrap text-center justify-center'>
         {
           data.map((item, index) => {
             return (
-              <div key={index} className='flex text-gray-200 text-[12px] rounded-sm font-extralight  mx-2 px-2 bg-primary/10'><label>#{item} </label></div>
+              <div key={index} className='flex text-off-white text-[12px] rounded-sm font-extralight lowercase my-1 mx-2 px-2 py-0.5 bg-off-white/10'><label>#{item} </label></div>
             )
           })
         }
@@ -83,23 +95,38 @@ const categoryId = category ? category.split(':')[1] : "Movies";
       <div>
       </div>
       <br /><br /><br /><br />
-      <div className='w-[90%] mx-auto  text-center grid grid-cols-6 gap-6 place-items-center'>
+      <div className='w-auto mx-16 px-6 py-8 bg-off-white/10  text-center flex flex-wrap gap-4 place-items-center'>
 
         {movieList?.map((item, index) => {
           let name = item[`n`];
+          let time = new Date(item[`a`]*1000);
+          console.log(item);
 
           return (
             <>
               {<div onClick={()=>{
                 let slug =  name.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '');
                  router.push(`/post-detail/${item?.pk}/${slug}/`)
-               
-              }} key={index} className="overflow-hidden cursor-pointer w-[195px] h-[275px] pt-[3rem] pb-5 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30 flex-col justify-center items-center gap-3.5 inline-flex hover:bg-primary/10 hover:border-[1px] hover:border-primary/50">
-                <div className="w-[150px] h-[125px] m-[5px] justify-center items-center inline-flex pb-2 pt-2">  <Image className='mt-[15px]' src={item[`t`] ? item[`t`] : categoryId==="XXX"?"https://i.therarbg.com/xnp.jpg": "https://i.therarbg.com/np.jpg"} width={150} height={150} alt='movie' layout="responsive" /></div>
+              }} key={index} className="my-1 mx-2 overflow-hidden w-[185px] cursor-pointer py-2 bg-off-white/10 rounded-md flex-col justify-center inline-flex hover:bg-primary/10 border border-off-white/10 hover:border-primary/50">
+                <div className="w-[161px] h-[180px] bg-cover rounded mx-auto justify-center items-center inline-flex" style={{'background-image':`url("${item[`t`] ? item[`t`] : categoryId==="XXX"?"https://i.therarbg.com/xnp.jpg": "https://i.therarbg.com/np.jpg"}")`}}>
+                </div>
                 <br />
-                  <div className="text-gray-200 text-opacity-80 text-[11px] pt-1 h-auto w-[175px] long-and-truncated">
-                  <span >
+                  <div className="text-off-white text-[12px] h-auto pt-1.5 long-and-truncated font-medium w-fit break-all">
+                  <span>
                     {name}
+                  </span>
+                </div>
+                <div className="flex text-off-white text-[10px] h-auto pt-1.5 long-and-truncated font-light justify-between">
+                  <span >
+                    {item['c'] || categoryId}
+                  </span>
+                  <span>・</span>
+                  <span >
+                    {time.getDate()}-{time.getMonth()+1}-{time.getFullYear()}
+                  </span>
+                  <span>・</span>
+                  <span >
+                    {formatBytes(item['s'])}
                   </span>
                 </div>
               </div>}
