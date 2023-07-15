@@ -7,7 +7,7 @@ import { Loader } from '../../Common/Loader';
 import { useRouter } from 'next/router';
 
 
-function formatBytes(bytes, decimals = 2) {
+function formatBytes(bytes, decimals = 1) {
   if (!+bytes) return '0 Bytes'
 
   const k = 1024
