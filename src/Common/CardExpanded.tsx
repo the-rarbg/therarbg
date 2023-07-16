@@ -1,5 +1,5 @@
 import React from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import {useRouter } from 'next/navigation';
 
 function formatBytes(bytes, decimals = 1) {
   if (!+bytes) return '0 Bytes'
