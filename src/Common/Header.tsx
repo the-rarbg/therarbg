@@ -27,11 +27,10 @@ const Header = () => {
     <header className="bg-background-header/25 text-sm font-medium flex sticky top-0 font-montserrat backdrop-blur-3xl px-8 md:px-16 justify-between">
       <span className='mx-6 cursor-pointer hover:text-green-400 text-xl font-semibold my-4' onClick={()=>route.push("/")}>theRARBG</span>
 
-      <div className='hidden md:flex mx-auto font-normal items-center'> 
-      {/* router.pathname */}
+      <div className='hidden md:flex mx-auto font-normal items-center'>
         {cRoutes.map((obj, i) => (
-          <div className={`px-6 uppercase cursor-pointer font-normal ${obj.path.includes(cRouter[1]) ? "border-b-2 border-primary" : ""} h-full flex items-center`} onClick={()=>route.push(`${obj.route}`)} key={i}>
-            <p className={`${obj.path.includes(cRouter[1]) ? "text-primary" : ""} hover:text-green-400 h-fit`}>{obj.title}</p>
+          <div className={`px-6 uppercase cursor-pointer font-normal ${obj.path.includes(cRouter[1] || "0") ? "border-b-2 border-primary" : ""} h-full flex items-center`} onClick={()=>route.push(`${obj.route}`)} key={i}>
+            <p className={`${obj.path.includes(cRouter[1] || "0") ? "text-primary" : ""} hover:text-green-400 h-fit`}>{obj.title}</p>
           </div>
         ))}
       </div>
