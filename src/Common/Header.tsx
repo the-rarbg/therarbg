@@ -23,7 +23,7 @@ const Header = () => {
   const route = useRouter()
   console.log(router)
   return (
-    <div className='z-50'>
+    <div className=''>
     <header className="hidden bg-background-header/25 text-sm font-medium md:flex sticky top-0 font-montserrat backdrop-blur-3xl px-8 md:px-16 justify-between">
 
 
@@ -47,7 +47,7 @@ const Header = () => {
         <span className='mx-6 cursor-pointer hover:text-green-400 text-xl font-semibold' onClick={()=>route.push("/")}>theRARBG</span>
         <img src='/navIcon.png' alt="The Navigation Icon" className='w-8 h-8 cursor-pointer' onClick={() => setShowNav(!showNav)}/>  
         </div>
-        <div className={`${showNav?"opacity-100":" opacity-0 h-0"} transition-all duration-500 ease-in-out  grow w-full flex flex-col pt-44 items-center gap-5`}>
+        <div className={`${showNav?"opacity-100  pt-56":" opacity-0 h-0 "} transition-all duration-500 ease-in-out  grow w-full flex flex-col items-center gap-5`}>
         {cRoutes.map((obj, i) => (
           <div className={`uppercase cursor-pointer text-5xl font-normal flex justify-center items-center ${obj.path.includes(router) ? "border-b-2 border-primary " : ""} `} onClick={()=>{route.push(`${obj.path[0]}`); setShowNav(false)}} key={i}>
             <p className={`${obj.path.includes(router) ? "text-primary" : ""} hover:text-green-400`}>{obj.title}</p>
