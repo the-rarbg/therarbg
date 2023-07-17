@@ -7,6 +7,7 @@ import { Loader } from '../../Common/Loader';
 import { useRouter } from 'next/router';
 import CardExpanded from '../../Common/CardExpanded';
 import { CompactList, ExpandedList } from '../../SVG/listing';
+import CardCompact from '../../Common/CardCompact';
 
 
 
@@ -89,17 +90,26 @@ const categoryId = category ? category.split(':')[1] : "Movies";
       <div className='flex mx-16 justify-between mb-8'>
         <div></div>
         <div className="flex bg-off-white/10 rounded-xl">
-          <div className={`px-4 py-2 ${ListType === 'compact' ? 'text-primary bg-primary/30' : ''} rounded-xl`}><CompactList/></div>
-          <div className={`px-4 py-2 ${ListType === 'expanded' ? 'text-primary bg-primary/30' : ''} rounded-xl`}><ExpandedList/></div>
+          <div className={`px-4 py-2 ${ListType === 'compact' ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
+    setListType('compact')
+  }} ><CompactList/></div>
+          <div className={`px-4 py-2 ${ListType === 'expanded' ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
+    setListType('expanded')
+  }} ><ExpandedList/></div>
         </div>
       </div>
       <div className='w-auto mx-16 px-6 py-8 bg-off-white/10  text-center flex flex-wrap gap-4 justify-center'>
 
         {movieList?.map((item, index) => {
-
-          return (
-            <CardExpanded item={item} categoryId={categoryId}/>
-          )
+          if(ListType === 'compact'){
+              return (
+                <CardCompact item={item} categoryId={categoryId}/>
+              )
+          }else{
+              return (
+                <CardExpanded item={item} categoryId={categoryId}/>
+              )
+          }
         })}
       </div>
     </div>
