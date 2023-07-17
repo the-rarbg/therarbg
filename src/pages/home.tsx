@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <div className="container  mx-auto py-3 font-medium bg-transparent min-h-screen  justify-center text-center font-montserrat">
       <div>
-        <p className='text-[3rem] md:text-[6rem] font-bold leading-[3.5rem] md:leading-[7rem] pt-16'> This World.<br />At Your Fingertips.</p>
+        <p className='text-[3rem] md:text-[6rem] font-bold leading-[3.5rem] md:leading-[7rem] pt-32 md:pt-16'> This World.<br />At Your Fingertips.</p>
         <div>
           <div className='w-10/12 md:w-1/2 mx-auto flex my-10 items-center border-b-[1.5px] border-primary px-1'>
             <input className='bg-transparent w-full py-4 font-light text-lg outline-none placeholder:font-montserrat font-montserrat' placeholder='Start typing what you want ?' />
