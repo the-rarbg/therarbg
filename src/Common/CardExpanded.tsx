@@ -1,7 +1,7 @@
 import React from 'react';
 import {useRouter } from 'next/navigation';
 
-function formatBytes(bytes, decimals = 1) {
+function formatBytes(bytes: number, decimals:number = 1) {
   if (!+bytes) return '0 Bytes'
 
   const k = 1024
@@ -13,7 +13,14 @@ function formatBytes(bytes, decimals = 1) {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
 }
 
-const CardExpanded = (props) => {
+interface CardProps {
+  // @ts-ignore the any type is used here because the data is not typed
+  item: Record<string, any>;
+  index: number;
+  categoryId: string;
+}
+
+const CardExpanded = (props: CardProps) => {
   const router = useRouter();
   let name = props.item[`n`];
   let time = new Date(props.item[`a`]*1000);
