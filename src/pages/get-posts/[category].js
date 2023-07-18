@@ -6,7 +6,7 @@ import ToastMsg from '../../Common/ToastMsg';
 import { Loader } from '../../Common/Loader';
 import { useRouter } from 'next/router';
 import CardExpanded from '../../Common/CardExpanded';
-import { CompactList, ExpandedList } from '../../SVG/listing';
+import { CompactList, ExpandedList, FilterIcon } from '../../SVG/listing';
 import CardCompact from '../../Common/CardCompact';
 
 
@@ -20,6 +20,7 @@ const categoryId = category ? category.split(':')[1] : "Movies";
 
   const [movieList, setMovieList] = useState([])
   const [ListType, setListType] = useState('expanded');
+  const [Filter, setFilter] = useState(true);
   const [page, setPage] = useState(1)
   const[loader,setLoader]=useState(false)
 
@@ -87,8 +88,12 @@ const categoryId = category ? category.split(':')[1] : "Movies";
       <div>
       </div>
       <br /><br /><br /><br />
-      <div className='flex mx-16 justify-between mb-8'>
-        <div></div>
+      <div className='flex mx-4 md:mx-16 justify-between mb-8'>
+        <div className="flex bg-off-white/10 rounded-xl">
+          <div className={`px-4 py-2 ${Filter ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
+      setFilter(!Filter)
+    }} ><FilterIcon/></div>
+        </div>
         <div className="flex bg-off-white/10 rounded-xl">
           <div className={`px-4 py-2 ${ListType === 'compact' ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
     setListType('compact')
@@ -98,19 +103,26 @@ const categoryId = category ? category.split(':')[1] : "Movies";
   }} ><ExpandedList/></div>
         </div>
       </div>
-      <div className='w-auto mx-16 px-6 py-8 bg-off-white/10  text-center flex flex-wrap gap-4 justify-center'>
-
-        {movieList?.map((item, index) => {
-          if(ListType === 'compact'){
-              return (
-                <CardCompact item={item} categoryId={categoryId}/>
-              )
-          }else{
-              return (
-                <CardExpanded item={item} categoryId={categoryId}/>
-              )
-          }
-        })}
+      <div className='w-auto mx-4 md:mx-16 pr-6 bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
+        <div className={`flex ${Filter ? 'w-full md:w-64 px-8' : 'w-0'} absolute md:sticky top-0 h-full md:h-auto backdrop-blur-lg bg-off-white/10 overflow-hidden py-6 transition-all duration-500 ease-in-out rounded-xl`}>
+          <div className="flex w-full justify-between h-fit">
+            <span className="text-2xl font-semibold">Filter</span>
+            <span className="text-rose-300 mt-auto mb-0.5">Clear all</span>
+          </div>
+        </div>
+        <div className={`flex-1 flex-wrap pl-6 py-8 justify-center`}>
+          {movieList?.map((item, index) => {
+            if(ListType === 'compact'){
+                return (
+                  <CardCompact item={item} categoryId={categoryId}/>
+                )
+            }else{
+                return (
+                  <CardExpanded item={item} categoryId={categoryId}/>
+                )
+            }
+          })}
+        </div>
       </div>
     </div>
   )
