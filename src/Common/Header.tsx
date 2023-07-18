@@ -51,7 +51,7 @@ const Header = () => {
         </div>
         <div className={`${showNav?"opacity-100  pt-56":" opacity-0 h-0 "} transition-all duration-500 ease-in-out  grow w-full flex flex-col items-center gap-5`}>
         {cRoutes.map((obj, i) => (
-          <div className={`uppercase cursor-pointer text-5xl font-normal flex justify-center items-center ${obj.path.includes(router) ? "border-b-2 border-primary " : ""} `} onClick={()=>{route.push(`${obj.path[0]}`); setShowNav(false)}} key={i}>
+          <div className={`uppercase cursor-pointer text-5xl font-normal flex justify-center items-center ${obj.path.includes(router) ? "border-b-2 border-primary " : ""} `} onClick={()=>{route.push(`${obj.route}`); setShowNav(false)}} key={i}>
             <p className={`${obj.path.includes(router) ? "text-primary" : ""} hover:text-green-400`}>{obj.title}</p>
           </div>
         ))}
