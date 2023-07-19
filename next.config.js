@@ -5,7 +5,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 module.exports = withBundleAnalyzer({
   images: {
-    domains: ['i.therarbg.com'],
+    domains: ['i.therarbg.com','localhost'],
   },
   eslint: {
     dirs: ['.'],
