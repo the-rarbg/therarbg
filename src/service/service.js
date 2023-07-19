@@ -1,8 +1,9 @@
 import axios from "axios";
 const API_BASE = 'https://therarbg.com';
+let token;
 
 const headersApplicationJson = {
-  "Content-Type": "application/json",
+  "Content-Type": "application/json"
 };
 
 export const registerApi = (data) => {
@@ -20,4 +21,21 @@ export const moviesListApi = (page, category, time) => {
 export const movieDetailsPost = (id,slug) => {
   let url = `${API_BASE}/post-detail/${id}/${slug}/?format=json`;
   return axios.get(url, { headers: headersApplicationJson })
+}
+
+export const getListComment = (eid,token) => {
+  let url = `${API_BASE}/user/api/v1/list-comment/${eid}/`;
+  return axios.get(url, { headers: {
+    "Content-Type": "application/json",
+    "Authorization":"Bearer "+token
+  } })
+}
+
+
+export const postComment = (data,token) => {
+  let url = `${API_BASE}/user/api/v1/create-comment/`;
+  return axios.post(url, data,{ headers: {
+    "Content-Type": "application/json",
+    "Authorization":"Bearer "+token
+  } })
 }

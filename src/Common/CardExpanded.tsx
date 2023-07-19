@@ -1,7 +1,7 @@
 import React from 'react';
 import {useRouter } from 'next/navigation';
 
-function formatBytes(bytes: number, decimals:number = 1) {
+export function formatBytes(bytes: number, decimals:number = 1) {
   if (!+bytes) return '0 Bytes'
 
   const k = 1024
