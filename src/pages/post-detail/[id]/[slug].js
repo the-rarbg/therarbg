@@ -40,14 +40,14 @@ const Details = () => {
               
                   <div className="w-[10rem] justify-start text-gray-200 text-opacity-80 text-[16px] pt-2 h-auto  long-and-truncated relative">
                    <h1 >{data?.name}</h1>
-                   <div className='flex space-x-4 bor'> 
+                   <div className='flex space-x-4 '> 
                    <span className='px-2 bg-primary/10 text-primary border-primary my-4 text-xs hover:bg-primary/30' style={{border:"none",fontWeight:"400"}}>Other/Video</span>
                    <span className='px-2 bg-primary/10 text-primary border-primary my-4 text-xs hover:bg-primary/30' style={{border:"none",fontWeight:"400"}}> &#128077; {data?.imdb_data?.rating}</span>
                    <span className='px-2 bg-primary/10 text-primary border-primary my-4 text-xs hover:bg-primary/30' style={{border:"none",fontWeight:"400"}}> &#x1F44D; 0</span>
                    </div>
                   
                    
-                   <div className='flex w-[50%] justify-between text-primary/70 text-[13px] absolute bottom-[0.7rem]'>
+                   <div className='flex w-[50%] justify-between text-gray-200 text-[13px] absolute bottom-[0.7rem]'>
                      <div>
                      <span>Seeders</span>
                      <span>Leechers</span>
@@ -64,11 +64,12 @@ const Details = () => {
                      </div>
                    </div>
                 </div>
+               
                  <div  className="w-[10%] text-gray-200 text-opacity-80 text-[16px] pt-1 h-auto  long-and-truncated relative" >
                <div className='block float-right w-[10x]'>
                  <div className='inline-grid'>
                   <button className='px-[5rem] py-2 bg-primary/10 text-gray-100 border-primary my-4 text-[15px] rounded bg-gradient-to-r from-green-400 via-purple-500  to-purple-600  hover:text-primary'  >Torrent Download</button>
-                  <button className='px-[5rem] py-2 bg-primary/10  border-primary  text-[15px] text-gray-100 rounded bg-gradient-to-r from-green-400 via-blue-500 to-blue-600 hover:text-primary'  >Magnet Download</button>
+                  <button className='px-[5rem] py-2 bg-primary/10  border-primary  text-[15px] text-gray-100 rounded bg-gradient-to-r from-green-400 via-blue-500 to-blue-600 hover:text-primary'  >&#129522; Magnet Download</button>
                   </div>
                   <div className='align-bottom flex absolute  bottom-2'>
                   <button className='px-[1.4rem] w-[135px] py-2 bg-primary/10 text-primary rounded border-primary mr-[0.4rem]  text-[13px] hover:bg-primary/30' style={{border:"none",fontWeight:"400"}} > &#8634; Refresh</button>
@@ -78,6 +79,41 @@ const Details = () => {
                  </div>
                </div>
               </div>
+            <br/>
+             <div className='flex'>
+               <div>
+               <div className='flex space-x-4 text-gray-500 '> 
+                  <span>Files</span>
+                  <span>Trackers</span>
+                  <span>More Info</span>
+                </div>
+                <div className='p-5 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30'>
+               
+                  <p>
+                   1 This ksjhd kjsdhkjh khsjd khdkhskjd kshjk This ksjhd kjsdhkjh khsjd khdkhskjd kshjk
+                  </p>
+                  <p>
+                   2 This ksjhd kjsdhkjh khsjd khdkhskjd kshjk  This ksjhd kjsdhkjh khsjd khdkhskjd kshjk
+                  </p>
+                  <p>
+                   3 This ksjhd kjsdhkjh khsjd khdkhskjd kshjk This ksjhd kjsdhkjh khsjd khdkhskjd kshjk
+                  </p>
+                </div>
+               </div>
+               <div>
+               <div className='space-x-4 text-gray-500 ml-[2rem]'> 
+                    <span className='pl-5'>Similar Torrents</span>
+                  <div className='p-5 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30'>
+                   <h1>
+                   1 This ksjhd kjsdhkjh khsjd khdkhskjd kshjk This ksjhd kjsdhkjh khsjd khdkhskjd kshjk
+                   </h1>
+
+                  </div>
+                 
+                </div>
+
+               </div>
+             </div>
       </div>
     </div>
   )
