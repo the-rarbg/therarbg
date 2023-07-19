@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useSyncExternalStore } from 'react'
 import { Loader } from '../../../Common/Loader';
 import { getListComment, movieDetailsPost, postComment } from '../../../service/service';
 import Image from 'next/image'
@@ -14,6 +14,8 @@ const Details = () => {
   const [loader, setLoader] = useState(false)
   const [data, setData] = useState()
   const[comment,setComment]=useState("")
+  const[eid,setEid]=useState("")
+  const[commentList,setCommentList]=useState([])
 
   useEffect(() => {
     if (router.isReady) {
@@ -22,7 +24,7 @@ const Details = () => {
       if (!id) return null;
       getDetails()
     }
-    getCommentInfo()
+   
   }, [router.isReady]);
 
   const getDetails = () => {
@@ -30,30 +32,42 @@ const Details = () => {
     movieDetailsPost(id, slug).then((res) => {
       setLoader(false)
       setData(res?.data)
-      console.log("re",res.data)
+      setEid(res?.data?.eid)
+      getCommentInfo(res?.data?.eid)
+   
     }).catch((err) => {
       setLoader(false)
       console.log(err)
     })
   }
 
-  const getCommentInfo =()=>{
+  const getCommentInfo =(value)=>{
+    setLoader(true)
     let token = localStorage.getItem("access_token")
-    getListComment(token).then((res)=>{
+    getListComment(value,token).then((res)=>{
     console.log("response",res)
+    setLoader(false)
+    setCommentList(res?.data?.results)
     }).catch((err)=>{
+      setLoader(false)
       console.log("error  :",err)
     })
   }
   const postCommentInfo =()=>{
+    setLoader(true)
     let token = localStorage.getItem("access_token")
     let data ={
-      trb_post: "pramod",
+      trb_post:eid,
       comment:comment
     }
     postComment(data,token).then((res)=>{
     console.log("response",res)
+    getCommentInfo(eid)
     }).catch((err)=>{
+      setLoader(false)
+      if(err?.res?.status===401){
+        window.location.hre="/"
+      }
       console.log("error  :",err)
     })
   }
@@ -168,9 +182,19 @@ const Details = () => {
 
 
 
-        <div className="w-[100%] mt-[5rem] p-10 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30 justify-start flex relative">
-          <div>
-
+        <div className="w-[100%] mt-[5rem] p-10 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30 justify-start inline-grid relative">
+        <div className='mb-2 inline-grid'>
+          {
+            commentList?.map((item,index)=>{
+              return(
+                <div className='p-3 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30'>
+                <h1>{item?.info?.user}:</h1><span>
+                  {item?.comment||"This sddjksd kjhsdkj"}
+                </span>
+                </div>
+              )
+            })
+          }
           </div>
           <div className='mb-2 inline-grid'>
             <input type="text" className='border-gray-200 w-[880px] rounded border-opacity-30 text-[12px] bg-gray-200 bg-opacity-10 p-2 px-3 text-gray-500' onChange={(e)=> setComment(e.target.value)} placeholder="Write your comments here" />

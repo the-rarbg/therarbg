@@ -23,8 +23,8 @@ export const movieDetailsPost = (id,slug) => {
   return axios.get(url, { headers: headersApplicationJson })
 }
 
-export const getListComment = (token) => {
-  let url = `${API_BASE}/user/api/v1/list-comment/af/`;
+export const getListComment = (eid,token) => {
+  let url = `${API_BASE}/user/api/v1/list-comment/${eid}/`;
   return axios.get(url, { headers: {
     "Content-Type": "application/json",
     "Authorization":"Bearer "+token
@@ -34,8 +34,8 @@ export const getListComment = (token) => {
 
 export const postComment = (data,token) => {
   let url = `${API_BASE}/user/api/v1/create-comment/`;
-  return axios.get(url, { headers: {
+  return axios.post(url, data,{ headers: {
     "Content-Type": "application/json",
-    "Authorization":"Token "+token
+    "Authorization":"Bearer "+token
   } })
 }
