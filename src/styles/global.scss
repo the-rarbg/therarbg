@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body{
 background:#0D0F0B;
 scroll-snap-stop: always;
@@ -18,10 +22,6 @@ a {
 a:hover {
   @apply border-b-2 border-blue-700;
 }
-
-@tailwind components;
-
-@tailwind utilities;
 
 .content p {
   @apply my-6;
@@ -51,7 +51,6 @@ a:hover {
     -moz-appearance: none;
     -o-appearance: none;
     appearance: none;
-    border: 1px solid #41B883;
     border-radius: 1px;
     outline: none;
     transition-duration: 0.3s;
@@ -61,17 +60,15 @@ a:hover {
 
 .checkbox > input:checked {
     position:relative;
-    border: 1px solid #41B883;
-    background-color: transparent;
 }
 
 .checkbox > input:checked + span::before {
     content: '\2713';
     display: block;
     text-align: center;
-    color: #41B883;
+    color: black;
     position: absolute;
-    font-size:13px;
+    font-size:12px;
     left: 0.15rem;
     top: 0;
 }

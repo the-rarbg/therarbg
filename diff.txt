@@ -1,0 +1,136 @@
+diff --git a/public/navIcon.png b/public/navIcon.png
+new file mode 100644
+index 0000000..b2ff2c9
+Binary files /dev/null and b/public/navIcon.png differ
+diff --git a/src/Common/Header.tsx b/src/Common/Header.tsx
+index 12ffb8f..79e32eb 100644
+--- a/src/Common/Header.tsx
++++ b/src/Common/Header.tsx
+@@ -1,4 +1,4 @@
+-import React from 'react';
++import React, { useState } from 'react';
+ import { usePathname, useRouter } from 'next/navigation';
+ 
+ const cRoutes = [
+@@ -19,12 +19,19 @@ const cRoutes = [
+   }
+ ];
+ 
++
+ const Header = () => {
++  const [showNav,setShowNav] = useState(false);
+   const router = usePathname();
+   const route = useRouter();
+   let cRouter = router?.split("/") ?? [];
+   return (
+-    <header className="bg-background-header/25 text-sm font-medium flex sticky top-0 font-montserrat backdrop-blur-3xl px-8 md:px-16 justify-between">
++    <div className=''>
++    <header className="hidden bg-background-header/25 text-sm font-medium md:flex sticky top-0 font-montserrat backdrop-blur-3xl px-8 md:px-16 justify-between">
++
++
++
++    
+       <span className='mx-6 cursor-pointer hover:text-green-400 text-xl font-semibold my-4' onClick={()=>route.push("/")}>theRARBG</span>
+ 
+       <div className='hidden md:flex mx-auto font-normal items-center'>
+@@ -36,6 +43,22 @@ const Header = () => {
+       </div>
+     <button className='px-5 bg-primary/10 text-primary border-primary my-4 text-xs hover:bg-primary/30' style={{border:"solid 0.5px",fontWeight:"400"}} onClick={()=>route.push("/login")}  >Login</button>
+     </header>
++      {/*Mobile Hamburger Menu */}
++      <div className={`${showNav?"h-screen":"h-[60px]"} transition-all ease-in-out duration-500 z-20   md:hidden bg-background-header/25 w-full fixed top-0 font-montserrat backdrop-blur-3xl px-8 md:px-16 flex flex-col`}>
++        <div className='h-[60px] w-full flex justify-between items-center'>
++        <span className='mx-6 cursor-pointer hover:text-green-400 text-xl font-semibold' onClick={()=>route.push("/")}>theRARBG</span>
++        <img src='/navIcon.png' alt="The Navigation Icon" className='w-8 h-8 cursor-pointer' onClick={() => setShowNav(!showNav)}/>  
++        </div>
++        <div className={`${showNav?"opacity-100  pt-56":" opacity-0 h-0 "} transition-all duration-500 ease-in-out  grow w-full flex flex-col items-center gap-5`}>
++        {cRoutes.map((obj, i) => (
++          <div className={`uppercase cursor-pointer text-5xl font-normal flex justify-center items-center ${obj.path.includes(router) ? "border-b-2 border-primary " : ""} `} onClick={()=>{route.push(`${obj.path[0]}`); setShowNav(false)}} key={i}>
++            <p className={`${obj.path.includes(router) ? "text-primary" : ""} hover:text-green-400`}>{obj.title}</p>
++          </div>
++        ))}
++        </div>
++      </div>
++  
++    </div>
+   );
+ };
+ 
+diff --git a/src/pages/home.tsx b/src/pages/home.tsx
+new file mode 100644
+index 0000000..f4309b4
+--- /dev/null
++++ b/src/pages/home.tsx
+@@ -0,0 +1,72 @@
++import { useRouter } from 'next/navigation'
++import React, { useState } from 'react'
++
++import { SearchSVG, MovieSVG } from '../SVG/search'
++
++let data1 = [{name:"Torrents",cat:"",time:"2D"}, {name:"Movie",cat:"Movies",time:"10D"}, {name:"TV-Show",cat:"TV",time:"10D"},{name:"Games",cat:"Games",time:"10D"}, {name:"Music",cat:"Music",time:"10D"}, {name:"Anime",cat:"Anime",time:"10D"}, {name:"Books",cat:"Books",time:"10D"},{name: "Other",cat:"Other",time:"10D"}]
++
++let array: (string | number)[] = []
++
++const Home = () => {
++  const router = useRouter()
++  const [data, setData] = useState(data1);
++
++
++  return (
++    <div className="container  mx-auto py-3 font-medium bg-transparent min-h-screen  justify-center text-center font-montserrat">
++      <div>
++        <p className='text-[3rem] md:text-[6rem] font-bold leading-[3.5rem] md:leading-[7rem] pt-32 md:pt-16'> This World.<br />At Your Fingertips.</p>
++        <div>
++          <div className='w-10/12 md:w-1/2 mx-auto flex my-10 items-center border-b-[1.5px] border-primary px-1'>
++            <input className='bg-transparent w-full py-4 font-light text-lg outline-none placeholder:font-montserrat font-montserrat' placeholder='Start typing what you want ?' />
++            <SearchSVG />
++          </div>
++          <div className='mx-8 flex text-center justify-center'>
++            <div className='font-thin flex flex-wrap justify-evenly'>
++              {
++                data1.map((item, index) => {
++                  return (
++                    <label key={index} className="checkbox">
++                      <input type="checkbox" className='w-4 h-4 rounded checked:bg-primary checked:border-primary border border-primary' onClick={() => {
++                        if (array.includes(index)) {
++                          array = array.filter(i => i !== index);
++                        }
++                        else {
++                          array.splice(index, 0, index);
++                        }
++                        console.log("array", array)
++                        const filteredArray = data1.filter((_item: any, index) => array.length === 0 ? true : array.includes(index));
++                        setData(filteredArray)
++
++                      }} />
++                      <span>{item?.name}</span>
++                    </label>
++
++                  )
++                })
++              }
++            </div>
++          </div>
++          <br />
++          <br />
++
++          <div className='px-8 md:px-0 w-full md:w-8/12 mx-auto text-center flex flex-wrap gap-4'>
++            {
++              data.map((item, index) => {
++                return (
++                  <div key={index} onClick={() => router.push(`/get-posts/category:${item?.cat?item?.cat:false}?time=${item?.time}`)} className="cursor-pointer w-[150px] md:w-[195px] h-[115px] md:pl-[26px] md:pr-[161px] pt-7 pb-16 bg-off-white/10 rounded-lg border-off-white/30 flex-col justify-start items-center md:items-start gap-3.5 inline-flex hover:bg-primary/10 border-[1px] hover:border-primary/50 group">
++                    <div className="w-[30px] h-[30px] p-[2.50px] justify-center items-center inline-flex text-off-white group-hover:text-primary">  <MovieSVG /></div>
++                    <div className="text-off-white group-hover:text-primary text-opacity-80 text-[13px] w-20 text-center md:text-start leading-[0px] ">{item?.name}</div>
++                  </div>
++                )
++              })}
++
++
++          </div>
++        </div>
++      </div>
++    </div>
++  )
++}
++
++export default Home
