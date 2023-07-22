@@ -20,7 +20,7 @@ const categoryId = category ? category.split(':')[1] : "Movies";
 
   const [movieList, setMovieList] = useState([])
   const [ListType, setListType] = useState('expanded');
-  const [Filter, setFilter] = useState(true);
+  const [Filter, setFilter] = useState(false);
   const [page, setPage] = useState(1)
   const[loader,setLoader]=useState(false)
 
