@@ -12,6 +12,7 @@ useEffect(()=>{
 },[])
 
 const handleUpload =()=>{
+  setLoader(true)
  let data ={
   name:formInput?.name ,
   short_name: formInput?.short_name,
