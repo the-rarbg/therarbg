@@ -18,6 +18,11 @@ export const moviesListApi = (page, category, time) => {
   let url = category === "false" ? `${API_BASE}/get-posts/time:${time}:format:json/?page=${page}` : `${API_BASE}/get-posts/category:${category}:time:${time}:format:json/?page=${page}`;
   return axios.get(url, { headers: headersApplicationJson })
 }
+
+export const moviesTopListApi = (page, category, time) => {
+  let url = `${API_BASE}/?format=json`;
+  return axios.get(url, { headers: headersApplicationJson })
+}
 export const movieDetailsPost = (id,slug) => {
   let url = `${API_BASE}/post-detail/${id}/${slug}/?format=json`;
   return axios.get(url, { headers: headersApplicationJson })
@@ -43,6 +48,14 @@ export const getListComment = (eid,token) => {
 
 export const postComment = (data,token) => {
   let url = `${API_BASE}/user/api/v1/create-comment/`;
+  return axios.post(url, data,{ headers: {
+    "Content-Type": "application/json",
+    "Authorization":"Bearer "+token
+  } })
+}
+
+export const  createTorrent  = (data,token)=>{
+  let url = `${API_BASE}/api/v1/create-trb-post/`
   return axios.post(url, data,{ headers: {
     "Content-Type": "application/json",
     "Authorization":"Bearer "+token

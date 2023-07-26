@@ -10,6 +10,17 @@ scroll-snap-stop: always;
 overflow-x:hidden;
 
 }
+
+input::placeholder {
+  
+  opacity: 0.5; 
+}
+
+input {
+ 
+  opacity: 0.9; 
+}
+
 img{
   aspect-ratio: 2/3 !important;
     object-fit: contain !important;
