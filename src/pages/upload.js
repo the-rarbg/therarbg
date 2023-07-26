@@ -29,17 +29,17 @@ const handleUpload =()=>{
   downloads: 1,
   seeders: 1,
   leechers:1,
-  info_hash: formInput?.hash
+  info_hash: formInput?.hash,
 }
-  createTorrent(data,token).then((res: any)=>{
+  createTorrent(data,token).then((res)=>{
 
     console.log(res)
-  }).catch((err: any)=>{
+  }).catch((err)=>{
     console.log(err)
   })
 }
 
-const handleChange =(e: { target: { name: any; value: any; }; })=>{
+const handleChange =(e)=>{
   const {name,value} = e.target;
    setFormInput({...formInput,[name]:value})
 }
