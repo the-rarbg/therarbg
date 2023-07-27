@@ -8,6 +8,35 @@ import { formatBytes } from '../../../Common/CardExpanded';
 
 const Details = () => {
 
+  let trackers = [
+    "udp://tracker.therarbg.com:6969/announce",
+    "udp://tracker.t-rb.org:6969/announce",
+    "udp://tracker.opentrackr.org:1337/announce",
+    "udp://opentracker.i2p.rocks:6969/announce",
+    "udp://tracker.openbittorrent.com:6969/announce",
+    "udp://open.demonii.com:1337/announce",
+    "udp://exodus.desync.com:6969/announce",
+    "udp://open.stealth.si:80/announce",
+    "udp://tracker.torrent.eu.org:451/announce",
+    "udp://tracker.moeking.me:6969/announce",
+    "udp://tracker1.bt.moack.co.kr:80/announce",
+    "udp://tracker.bitsearch.to:1337/announce",
+    "udp://explodie.org:6969/announce",
+    "udp://tracker.tiny-vps.com:6969/announce",
+    "udp://tracker.theoks.net:6969/announce",
+    "udp://p4p.arenabg.com:1337/announce",
+    "udp://movies.zsw.ca:6969/announce",
+
+]
+
+
+
+let temp = "&tr="
+  let tracker = ""
+  trackers.map((item)=>{
+    tracker=tracker+temp+item
+  })
+
   const router = useRouter();
   let id;
   let slug;
@@ -16,6 +45,8 @@ const Details = () => {
   const[comment,setComment]=useState("")
   const[eid,setEid]=useState("")
   const[commentList,setCommentList]=useState([])
+  const[magnateDownload,setMagnateDownload]=useState("")
+  const[torrentDownload,setTorrentDownload]=useState("")
 
   useEffect(() => {
     if (router.isReady) {
@@ -31,6 +62,14 @@ const Details = () => {
     setLoader(true)
     movieDetailsPost(id, slug).then((res) => {
       setLoader(false)
+
+      let url = `magnet:?xt=urn:btih:${res?.data?.info_hash}&dn=${res?.data?.name}${trackers}`
+      let url_t = `https://m2t.mirrorbay.org/info-hash/${res?.data?.info_hash}/${res?.data?.name}/?apikey=therarbg`
+      setMagnateDownload(url)
+      setTorrentDownload(url_t)
+
+
+
       setData(res?.data)
       setEid(res?.data?.eid)
       getCommentInfo(res?.data?.eid)
@@ -56,6 +95,9 @@ const Details = () => {
   const postCommentInfo =()=>{
     setLoader(true)
     let token = localStorage.getItem("access_token")
+    if(!token){
+      router.push("/login")
+    }
     let data ={
       trb_post:eid,
       comment:comment
@@ -72,13 +114,17 @@ const Details = () => {
     })
   }
 
+
+ 
+
   return (
     <div>
       {loader ? <Loader /> : null}
+    
       <div className='w-[86%] pt-5 pb-5 m-auto'>
         <div className="mt-[5rem] pb-5 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30 justify-start flex relative">
           <div className="w-[15%]  m-3 relative max-w-[15%] ">
-            <Image src={data?.thumbnail ? data?.thumbnail : "https://i.therarbg.com/np.jpg"} width={800} height={100} alt='movie' layout="responsive" />
+            <img src={data?.thumbnail ? data?.thumbnail : "https://i.therarbg.com/np.jpg"} width={800} height={100} alt='movie' layout="responsive" />
           </div>
 
           <div className="w-[10rem] justify-start text-gray-200 text-opacity-80 text-[16px] pt-2 h-auto  long-and-truncated relative">
@@ -111,8 +157,12 @@ const Details = () => {
           <div className="w-[10%] text-gray-200 text-opacity-80 text-[16px] pt-1 h-auto  long-and-truncated relative" >
             <div className='block float-right w-[10x]'>
               <div className='inline-grid'>
-                <button className='px-[5rem] py-2 bg-primary/10 text-gray-100 border-primary my-4 text-[15px] rounded bg-gradient-to-r from-green-400 via-purple-500  to-purple-600  hover:text-primary'  >Torrent Download</button>
-                <button className='px-[5rem] py-2 bg-primary/10  border-primary  text-[15px] text-gray-100 rounded bg-gradient-to-r from-green-400 via-blue-500 to-blue-600 hover:text-primary'  >&#129522; Magnet Download</button>
+                <button className='px-[5rem] py-2 bg-primary/10 text-gray-100 border-primary my-4 text-[15px] rounded bg-gradient-to-r from-green-400 via-purple-500  to-purple-600  hover:text-primary' onClick={()=>{
+                  window.open(torrentDownload,'_blank')
+                }} >Torrent Download</button>
+                <button className='px-[5rem] py-2 bg-primary/10  border-primary  text-[15px] text-gray-100 rounded bg-gradient-to-r from-green-400 via-blue-500 to-blue-600 hover:text-primary' onClick={()=>{
+                  window.open(magnateDownload,'_blank')
+                  }}  >&#129522; Magnet Download</button>
               </div>
               <div className='align-bottom flex absolute  bottom-2'>
                 <button className='px-[1.4rem] w-[135px] py-2 bg-primary/10 text-primary rounded border-primary mr-[0.4rem]  text-[13px] hover:bg-primary/30' style={{ border: "none", fontWeight: "400" }} > &#8634; Refresh</button>
@@ -123,30 +173,29 @@ const Details = () => {
           </div>
         </div>
         <br />
-        <div className='flex'>
+        <div className='grid gap-6 mb-6 md:grid-cols-2'>
           <div>
             <div className='flex space-x-4 text-gray-500 '>
               <span>Files</span>
               <span>Trackers</span>
               <span>More Info</span>
             </div>
-            <div className='p-5 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30'>
-
-              <p>
-                1 This ksjhd kjsdhkjh khsjd khdkhskjd kshjk This ksjhd kjsdhkjh khsjd khdkhskjd kshjk
-              </p>
-              <p>
-                2 This ksjhd kjsdhkjh khsjd khdkhskjd kshjk  This ksjhd kjsdhkjh khsjd khdkhskjd kshjk
-              </p>
-              <p>
-                3 This ksjhd kjsdhkjh khsjd khdkhskjd kshjk This ksjhd kjsdhkjh khsjd khdkhskjd kshjk
-              </p>
-            </div>
+            <div className='p-5 text-gray-300 overflow-y-scroll bg-gray-200 bg-opacity-10 h-[300px] rounded-lg border-gray-200 border-opacity-30'>
+{
+  trackers.map((item,index)=>{
+    return(
+      <p className='p-1' key={index}>
+      {item}
+    </p>
+    )
+  })
+}       
+ </div>
           </div>
           <div>
             <div className='space-x-4 text-gray-300 ml-[2rem]'>
               <span className='pl-5'>Similar Torrents</span>
-              <div className='p-5 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30'>
+              <div className='p-5 bg-gray-200 bg-opacity-10 overflow-y-scroll rounded-lg  h-[300px] border-gray-200 border-opacity-30'>
                 {
                   data?.recomendations?.map((item, index) => {
                   
@@ -154,15 +203,15 @@ const Details = () => {
                       <div key={index} onClick={() => {
                         let slug = item[`n`].toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '');
                        window.location.href = `/post-detail/${item?.pk}/${slug}/`;
-                      }} className='cursor-pointer'>
+                      }} className='cursor-pointer text-gray-300'>
 
-                        <h1>
+                        <p>
                           {item[`n`]}
-                        </h1>
+                        </p>
                         <div className='text-off-white text-[12px]'>
                           <span className='px-2 bg-primary/10 text-primary mr-3 py-[1.5px] rounded border-primary my-4 text-xs hover:bg-primary/30' style={{ border: "none", fontWeight: "400" }}>{item['c']}</span>
                           <span>
-                            <i className="fa fa-database"></i>  {formatBytes(item[`s`])}
+                            <i className="fa fa-database text-primary"></i>  {formatBytes(item[`s`])}
                           </span>
                         </div>
 
@@ -180,9 +229,7 @@ const Details = () => {
           </div>
         </div>
 
-
-
-        <div className="w-[100%] mt-[5rem] p-10 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30 justify-start inline-grid relative">
+        <div className="w-[100%] mt-[2rem] p-10 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30 justify-start inline-grid relative">
         <div className='mb-2 inline-grid'>
           {
             commentList?.map((item,index)=>{
@@ -201,7 +248,7 @@ const Details = () => {
             <button onClick={postCommentInfo} className='px-2 py-[2.5px] rounded w-[100px] bg-primary/10 text-primary border-primary my-4 text-xs hover:bg-primary/30' style={{border:"solid 0.5px",fontWeight:"400"}} >POST</button>
           </div>
         </div>
-
+       
 
       </div>
     </div>

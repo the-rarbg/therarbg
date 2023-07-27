@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
 const cRoutes = [
@@ -13,7 +13,12 @@ const cRoutes = [
     title: "Search",
   },
   {
-    path: ["about-us"],
+    path: ["upload"],
+    route: "/upload/",
+    title: "Upload",
+  },
+  {
+    path: ["upload-us"],
     route: "/about-us/",
     title: "About Us",
   }
@@ -24,7 +29,9 @@ const Header = () => {
   const [showNav,setShowNav] = useState(false);
   const router = usePathname();
   const route = useRouter();
+
   let cRouter = router?.split("/") ?? [];
+
   return (
     <div className=''>
     <header className="hidden bg-background-header/25 text-sm font-medium md:flex sticky top-0 font-montserrat backdrop-blur-3xl px-8 md:px-16 justify-between">
@@ -41,7 +48,7 @@ const Header = () => {
           </div>
         ))}
       </div>
-    <button className='px-5 bg-primary/10 text-primary border-primary my-4 text-xs hover:bg-primary/30' style={{border:"solid 0.5px",fontWeight:"400"}} onClick={()=>route.push("/login")}  >Login</button>
+    <button className='px-5 bg-primary/10 text-primary border-primary my-4 text-xs hover:bg-primary/30' style={{border:"solid 0.5px",fontWeight:"400"}} onClick={()=>route.push("/login")}  >{"Login"}</button>
     </header>
       {/*Mobile Hamburger Menu */}
       <div className={`${showNav?"h-screen":"h-[60px]"} transition-all ease-in-out duration-500 z-20   md:hidden bg-background-header/25 w-full fixed top-0 font-montserrat backdrop-blur-3xl px-8 md:px-16 flex flex-col`}>
