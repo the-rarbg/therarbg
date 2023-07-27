@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 
 import { SearchSVG, MovieSVG } from '../SVG/search'
 
-let data1 = [{name:"Torrents",cat:"",time:"2D"}, {name:"Movie",cat:"Movies",time:"10D"}, {name:"TV-Show",cat:"TV",time:"10D"},{name:"Games",cat:"Games",time:"10D"}, {name:"Music",cat:"Music",time:"10D"}, {name:"Anime",cat:"Anime",time:"10D"}, {name:"Books",cat:"Books",time:"10D"},{name: "Other",cat:"Other",time:"10D"}]
+let data1 = [ {name:"Movie",cat:"Movies",time:"10D"}, {name:"TV-Show",cat:"TV",time:"10D"},{name:"Games",cat:"Games",time:"10D"}, {name:"Music",cat:"Music",time:"10D"}, {name:"Anime",cat:"Anime",time:"10D"}, {name:"Books",cat:"Books",time:"10D"},{name: "Other",cat:"Other",time:"10D"},{name:"XXX",cat:"XXX",time:"1D"}]
 
 let array: (string | number)[] = []
 
@@ -50,9 +50,9 @@ const Home = () => {
 
         <div className='px-8 md:px-0 w-full md:w-8/12 mx-auto text-center flex flex-wrap gap-4 justify-center'>
           {
-            data.map((item, index) => {
+            data1.map((item, index) => {
               return (
-                <div key={index} onClick={() => router.push(`/get-posts/category:${item?.cat?item?.cat:false}?time=${item?.time}`)} className="cursor-pointer w-[150px] md:w-[195px] h-[115px] md:pl-[26px] md:pr-[161px] pt-7 pb-16 bg-off-white/10 rounded-lg border-off-white/30 flex-col justify-start items-center md:items-start gap-3.5 inline-flex hover:bg-primary/10 border-[1px] hover:border-primary/50 group">
+                <div key={index} onClick={() => router.push(`/get-posts/category:${item?.cat}?time=${item?.time}`)} className="cursor-pointer w-[150px] md:w-[195px] h-[115px] md:pl-[26px] md:pr-[161px] pt-7 pb-16 bg-off-white/10 rounded-lg border-off-white/30 flex-col justify-start items-center md:items-start gap-3.5 inline-flex hover:bg-primary/10 border-[1px] hover:border-primary/50 group">
                   <div className="w-[30px] h-[30px] p-[2.50px] justify-center items-center inline-flex text-off-white group-hover:text-primary">  <MovieSVG /></div>
                   <div className="text-off-white group-hover:text-primary text-opacity-80 text-[13px] w-20 text-center md:text-start leading-[0px] ">{item?.name}</div>
                 </div>
