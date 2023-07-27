@@ -56,7 +56,7 @@ const LendingPage = () => {
 
 
       </div>
-      <div className='flex justify-center m-2 w-[95%] relative'>
+      <div className='flex justify-center m-2 w-[89%] relative'>
         <div className=" bg-off-white/10 w-[54%] rounded-xl  justify-center align-middle p-2">
           <span>Top 10 Movies</span>
         </div>
@@ -74,9 +74,9 @@ const LendingPage = () => {
 
       </div>
 
-      <div className='w-auto mx-4 md:mx-16 pr-6 bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
+      <div className='w-auto mb-[3rem] mx-4 md:mx-[9rem] bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
 
-        <div className={`flex-1 flex-wrap pl-6 py-8 justify-center`}>
+        <div className={`flex-1 flex-wrap py-8 justify-center`}>
           {movieList?.Movies?.map((item, index) => {
             if (ListType === 'compact') {
               return (
@@ -103,9 +103,9 @@ const LendingPage = () => {
 
         </div>
       </div>
-      <div className='w-auto mx-4 md:mx-16 pr-6 bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
+      <div className='w-auto mb-[3rem] mx-4 md:mx-[9rem] bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
 
-        <div className={`flex-1 flex-wrap pl-6 py-8 justify-center`}>
+        <div className={`flex-1 flex-wrap py-8 justify-center`}>
           {movieList?.Anime?.map((item, index) => {
             if (ListType === 'compact') {
               return (
@@ -135,9 +135,9 @@ const LendingPage = () => {
 
         </div>
       </div>
-      <div className='w-auto mx-4 md:mx-16 pr-6 bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
+      <div className='w-auto mb-[3rem] mx-4 md:mx-[9rem] bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
 
-        <div className={`flex-1 flex-wrap pl-6 py-8 justify-center`}>
+        <div className={`flex-1 flex-wrap py-8 justify-center`}>
           {movieList?.XXX?.map((item, index) => {
             if (ListType === 'compact') {
               return (
@@ -166,9 +166,9 @@ const LendingPage = () => {
 
         </div>
       </div>
-      <div className='w-auto mx-4 md:mx-16 pr-6 bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
+      <div className='w-auto mb-[3rem] mx-4 md:mx-[9rem] bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
 
-        <div className={`flex-1 flex-wrap pl-6 py-8 justify-center`}>
+        <div className={`flex-1 flex-wrap py-8 justify-center`}>
           {movieList?.TV?.map((item, index) => {
             if (ListType === 'compact') {
               return (
@@ -199,9 +199,9 @@ const LendingPage = () => {
 
         </div>
       </div>
-      <div className='w-auto mx-4 md:mx-16 pr-6 bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
+      <div className='w-auto mb-[3rem] mx-4 md:mx-[9rem] bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
 
-        <div className={`flex-1 flex-wrap pl-6 py-8 justify-center`}>
+        <div className={`flex-1 flex-wrap py-8 justify-center`}>
           {movieList?.Music?.map((item, index) => {
             if (ListType === 'compact') {
               return (
@@ -231,9 +231,9 @@ const LendingPage = () => {
 
         </div>
       </div>
-      <div className='w-auto mx-4 md:mx-16 pr-6 bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
+      <div className='w-auto mb-[3rem] mx-4 md:mx-[9rem] bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
 
-        <div className={`flex-1 flex-wrap pl-6 py-8 justify-center`}>
+        <div className={`flex-1 flex-wrap py-8 justify-center`}>
           {movieList?.Books?.map((item, index) => {
             if (ListType === 'compact') {
               return (
@@ -264,9 +264,9 @@ const LendingPage = () => {
 
         </div>
       </div>
-      <div className='w-auto mx-4 md:mx-16 pr-6 bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
+      <div className='w-auto mb-[3rem] mx-4 md:mx-[9rem] bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
 
-        <div className={`flex-1 flex-wrap pl-6 py-8 justify-center`}>
+        <div className={`flex-1 flex-wrap py-8 justify-center`}>
           {movieList?.Games?.map((item, index) => {
             if (ListType === 'compact') {
               return (
@@ -296,9 +296,9 @@ const LendingPage = () => {
 
         </div>
       </div>
-      <div className='w-auto mx-4 md:mx-16 pr-6 bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
+      <div className='w-auto mb-[3rem] mx-4 md:mx-[9rem] bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
 
-        <div className={`flex-1 flex-wrap pl-6 py-8 justify-center`}>
+        <div className={`flex-1 flex-wrap py-8 justify-center`}>
           {movieList?.Documentaries?.map((item, index) => {
             if (ListType === 'compact') {
               return (
@@ -326,9 +326,9 @@ const LendingPage = () => {
 
         </div>
       </div>
-      <div className='w-auto mx-4 md:mx-16 pr-6 bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
+      <div className='w-auto mb-[3rem] mx-4 md:mx-[9rem] bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
 
-        <div className={`flex-1 flex-wrap pl-6 py-8 justify-center`}>
+        <div className={`flex-1 flex-wrap py-8 justify-center`}>
           {movieList?.Apps?.map((item, index) => {
             if (ListType === 'compact') {
               return (

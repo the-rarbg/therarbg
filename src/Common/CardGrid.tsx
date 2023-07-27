@@ -27,8 +27,8 @@ const CardExpanded = (props: CardProps) => {
   return (
   <div onClick={()=>{
     let slug =  name.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '');
-     router.push(`/post-detail/${props.item?.pk}/${slug}/`)
-  }} key={props.index} className="my-2 mx-2 overflow-hidden w-[190px] cursor-pointer py-2 bg-off-white/10 rounded-md flex-col justify-center inline-flex hover:bg-primary/10 border border-off-white/10 hover:border-primary/50">
+     router.push(`/post-detail/${props.item?.eid}/${slug}/`)
+  }} key={props.index} className="my-2 mx-3 overflow-hidden w-[190px] cursor-pointer py-2 bg-off-white/10 rounded-md flex-col justify-center inline-flex hover:bg-primary/10 border border-off-white/10 hover:border-primary/50">
     <div className="w-[166px] h-[185px] bg-cover rounded mx-auto justify-center items-center inline-flex" style={{'backgroundImage':`url("${props.item[`thumbnail`] ? props.item[`thumbnail`] : props.categoryId==="XXX"?"https://i.therarbg.com/xnp.jpg": "https://i.therarbg.com/np.jpg"}")`}}>
     </div>
     <br />
