@@ -1,15 +1,14 @@
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import React from 'react'
 
 import { SearchSVG, MovieSVG } from '../SVG/search'
 
 let data1 = [ {name:"Movie",cat:"Movies",time:"10D"}, {name:"TV-Show",cat:"TV",time:"10D"},{name:"Games",cat:"Games",time:"10D"}, {name:"Music",cat:"Music",time:"10D"}, {name:"Anime",cat:"Anime",time:"10D"}, {name:"Books",cat:"Books",time:"10D"},{name: "Other",cat:"Other",time:"10D"},{name:"XXX",cat:"XXX",time:"1D"}]
 
-let array: (string | number)[] = []
 
 const Home = () => {
   const router = useRouter()
-  const [data, setData] = useState(data1);
+  
   return (
     <div className="container  mx-auto py-3 font-medium bg-transparent min-h-screen  justify-center text-center font-montserrat">
     <div>
@@ -26,15 +25,15 @@ const Home = () => {
                 return (
                   <label key={index} className="checkbox">
                     <input type="checkbox" className='w-4 h-4 rounded checked:bg-primary checked:border-primary border border-primary' onClick={() => {
-                      if (array.includes(index)) {
-                        array = array.filter(i => i !== index);
-                      }
-                      else {
-                        array.splice(index, 0, index);
-                      }
-                      console.log("array", array)
-                      const filteredArray = data1.filter((_item: any, index) => array.length === 0 ? true : array.includes(index));
-                      setData(filteredArray)
+                      // if (array.includes(index)) {
+                      //   array = array.filter(i => i !== index);
+                      // }
+                      // else {
+                      //   array.splice(index, 0, index);
+                      // }
+                      // console.log("array", array)
+                      // const filteredArray = data1.filter((_item: any, index) => array.length === 0 ? true : array.includes(index));
+                    
 
                     }} />
                     <span>{item?.name}</span>
