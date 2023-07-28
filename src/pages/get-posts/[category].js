@@ -1,6 +1,6 @@
 import { SearchSVG } from '@/SVG/search'
 import React, { useEffect, useState } from 'react'
-import Image from 'next/image'
+
 import { moviesListApi } from '../../service/service';
 import ToastMsg from '../../Common/ToastMsg';
 import { Loader } from '../../Common/Loader';
@@ -11,33 +11,62 @@ import CardCompact from '../../Common/CardCompact';
 
 
 
+
 const Latest = () => {
 const router = useRouter()
 const {category,time} = router.query;
 const categoryId = category ? category.split(':')[1] : "Movies";
 
-  let data = ["Torrents", "Movie", "TV-Show", "Games", "Music", "Anime", "Books", "Other"]
+let data = [{name:"Movie",cat:"Movies",time:"10D",color:"#ee7633"},
+ {name:"TV-Show",cat:"TV",time:"10D",color:"#7affb8"},
+ {name:"Games",cat:"Games",time:"10D",color:"#ADFF2F"},
+ {name:"Music",cat:"Music",time:"10D",color:"#418eed"},
+ {name:"Anime",cat:"Anime",time:"10D",color:"#00FFFF"},
+  {name:"Books",cat:"Books",time:"10D",color:"#CDCD00"},
+  {name: "XXX",cat:"XXX",time:"10D",color:"#FF00FF"},
+  {name: "Other",cat:"Other",time:"10D",color:"#ebad32"}]
 
   const [movieList, setMovieList] = useState([])
   const [ListType, setListType] = useState('expanded');
   const [Filter, setFilter] = useState(false);
   const [page, setPage] = useState(1)
   const[loader,setLoader]=useState(false)
+  const[cat,setCat]=useState(categoryId)
 
   useEffect(() => {
-   
-    fetchMovieList(categoryId);
+      
+    fetchMovieList(cat);
+    
   
   }, [page])
-  
+  useEffect(()=>{
+    fetchMovieListRefresh(cat);
+  },[cat])
 
-  const fetchMovieList = (categoryId) => {
+  const fetchMovieList = (cat) => {
+    let  category = cat ? cat:"Movies"
+    let latest = time?time:"10D"
+    setLoader(true)
+    moviesListApi(page,category,latest).then((res) => { 
+       console.log("page",res?.data?.results)
+       setLoader(false)
+        setMovieList([...movieList, ...res.data.results])
+    }).catch((err) => {
+      console.log("error", err)
+      ToastMsg("Some thing went wrong ","error")
+      setLoader(false)
+    })
+
+  }
+
+  const fetchMovieListRefresh = (categoryId) => {
+
     let latest = time?time:"10D"
     setLoader(true)
     moviesListApi(page,categoryId,latest).then((res) => { 
        console.log("page",res?.data?.results)
        setLoader(false)
-        setMovieList([...movieList, ...res.data.results])
+        setMovieList(res.data.results)
     }).catch((err) => {
       console.log("error", err)
       ToastMsg("Some thing went wrong ","error")
@@ -68,26 +97,33 @@ const categoryId = category ? category.split(':')[1] : "Movies";
   return (
     <div className='text-center font-montserrat'>
       {loader?<Loader/>:null}
-      <br /> <br /> <br />
-      <p className='text-[6rem] font-bold leading-[6rem] pt-16'> Search</p>
-      <p className='mt-4 leading-[0rem] font-light'> Browse through thousands of torrents files</p>
-      <br /><br />
+
+      <div className='w-[100%] justify-end'>
+     
       <div className='w-10/12 md:w-1/2 mx-auto flex my-3 items-center border-b-[1px] border-primary px-1'>
         <input className='bg-transparent w-full py-4 font-light text-lg outline-none  placeholder:font-montserrat font-montserrat' placeholder='Start typing what you want ?' />
         <SearchSVG />
       </div>
-      <div className='mx-8 flex flex-wrap text-center justify-center'>
+      <div className='mx-8  flex flex-wrap text-center justify-center'>
         {
           data.map((item, index) => {
             return (
-              <div key={index} className='flex text-off-white text-[12px] rounded-sm font-extralight lowercase my-1 mx-2 px-2 py-0.5 bg-off-white/10'><label>#{item} </label></div>
+              <div onClick={() => 
+                {
+                  setCat(item?.cat)
+                  router.push(`/get-posts/category:${item?.cat}?time=${item?.time}`)
+                 
+              }} key={index} cursor-pointer className="flex bg-primary/15 cursor-pointer font-medium text-[14px] rounded lowercase my-1 mx-2 px-2 py-0.5 " 
+              style={{color:cat===item?.cat?"#fff":item?.color,background:cat===item?.cat?"#008000":""}}>
+
+                <label className='cursor-pointer'>{item?.name} </label></div>
             )
           })
         }
       </div>
-      <div>
+
       </div>
-      <br /><br /><br /><br />
+     <br/>
       <div className='flex mx-4 md:mx-16 justify-between mb-8'>
         <div className="flex bg-off-white/10 rounded-xl">
           <div className={`px-4 py-2 ${Filter ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{

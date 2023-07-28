@@ -4,13 +4,18 @@ import { usePathname, useRouter } from 'next/navigation';
 const cRoutes = [
   {
     path: ["home"],
-    route: "/home",
+    route: "/lendingPage",
     title: "Home",
+  },
+  {
+    path: ["search"],
+    route: "/search",
+    title: "Search",
   },
   {
     path: ["get-posts"],
     route: "/get-posts/category:Movies/",
-    title: "Search",
+    title: "Movies",
   },
   {
     path: ["upload"],
