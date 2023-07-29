@@ -9,6 +9,7 @@ let data1 = [ {name:"Movie",cat:"Movies",time:"10D"}, {name:"TV-Show",cat:"TV",t
 const Home = () => {
   const router = useRouter()
   
+  
   return (
     <div className="container  mx-auto py-3 font-medium bg-transparent min-h-screen  justify-center text-center font-montserrat">
     <div>
@@ -24,18 +25,7 @@ const Home = () => {
               data1.map((item, index) => {
                 return (
                   <label key={index} className="checkbox">
-                    <input type="checkbox" className='w-4 h-4 rounded checked:bg-primary checked:border-primary border border-primary' onClick={() => {
-                      // if (array.includes(index)) {
-                      //   array = array.filter(i => i !== index);
-                      // }
-                      // else {
-                      //   array.splice(index, 0, index);
-                      // }
-                      // console.log("array", array)
-                      // const filteredArray = data1.filter((_item: any, index) => array.length === 0 ? true : array.includes(index));
-                    
-
-                    }} />
+                    <input type="checkbox" className='w-4 h-4 rounded checked:bg-primary checked:border-primary border border-primary'/>
                     <span>{item?.name}</span>
                   </label>
 

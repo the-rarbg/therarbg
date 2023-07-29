@@ -19,6 +19,11 @@ export const moviesListApi = (page, category, time) => {
   return axios.get(url, { headers: headersApplicationJson })
 }
 
+export const getSearchResult = (search) => {
+  let url = `${API_BASE}/get-posts/keywords:${search}:format:json`;
+  return axios.get(url, { headers: headersApplicationJson })
+}
+
 export const moviesTopListApi = (page, category, time) => {
   let url = `${API_BASE}/?format=json`;
   return axios.get(url, { headers: headersApplicationJson })
