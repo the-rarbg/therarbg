@@ -11,7 +11,7 @@ import ToastMsg from '../Common/ToastMsg';
 import { CompactList, ExpandedList } from '../SVG/listing';
 
 
-const LendingPage = () => {
+const LandingPage = () => {
 
   const router = useRouter()
   const { category, time } = router.query;
@@ -346,4 +346,4 @@ const LendingPage = () => {
   )
 }
 
-export default LendingPage
+export default LandingPage
