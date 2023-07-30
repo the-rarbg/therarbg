@@ -3,8 +3,8 @@ import { usePathname, useRouter } from 'next/navigation';
 
 const cRoutes = [
   {
-    path: ["lendingPage"],
-    route: "/lendingPage",
+    path: ["home"],
+    route: "/home",
     title: "Home",
   },
   {
