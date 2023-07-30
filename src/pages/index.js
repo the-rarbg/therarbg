@@ -1,6 +1,6 @@
 
 import React from 'react'
-import LendingPage from "src/pages/lendingPage.js"
+import LendingPage from "src/pages/Home.js"
 
 
 
@@ -11,7 +11,7 @@ const Index = () => {
 
   return (
   <>
-  <LendingPage/>
+  <Home/>
   </>
   )
 }
