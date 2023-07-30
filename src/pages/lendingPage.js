@@ -76,7 +76,7 @@ const LendingPage = () => {
 
       <div className='w-auto mb-[3rem] mx-4 md:mx-[9rem] bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
 
-        <div className={`flex-1 flex-wrap py-8 justify-center`}>
+        <div className={`flex-1 px-4 flex-wrap py-8 justify-center`}>
           {movieList?.Movies?.map((item, index) => {
             if (ListType === 'compact') {
               return (
