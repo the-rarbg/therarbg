@@ -184,7 +184,7 @@ const Details = () => {
           </div>
         </div>
         <br />
-        <div className={`grid gap-2 mb-6 md:grid-cols-${data?.imdb_data?.video_list[0]?.key?3:2}`}>
+        <div className={`grid gap-2 mb-6 ${data?.imdb_data?.video_list[0]?.key?"md:grid-cols-3":"md:grid-cols-2"}`}>
           <div>
             <div className='flex space-x-4 text-gray-500 text-[13px] '>
               <span className={`cursor-pointer mb-[5px]  px-[0.5rem] rounded  ${highligth==="Files"? "bg-primary/10":""}`} onClick={()=>setHighLight("Files")} >Files</span>
