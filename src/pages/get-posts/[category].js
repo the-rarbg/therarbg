@@ -32,7 +32,7 @@ const Latest = () => {
   const [page, setPage] = useState(1)
   const [loader, setLoader] = useState(false)
   const [cat, setCat] = useState(categoryId)
-  const [search,setSearch]=useState(false)
+  const [search, setSearch] = useState(false)
 
   useEffect(() => {
 
@@ -76,7 +76,8 @@ const Latest = () => {
 
   }
 
-  const searchResult =()=>{
+  const searchResult = (e) => {
+    e.preventDefault()
     setLoader(true)
     getSearchResult(search).then((res) => {
       console.log("page", res?.data?.results)
@@ -87,12 +88,9 @@ const Latest = () => {
       ToastMsg("Some thing went wrong ", "error")
       setLoader(false)
     })
-
   }
-  console.log("pramod", movieList)
-
   useEffect(() => {
-    if(search){
+    if (search) {
       return
     }
     function handleScroll() {
@@ -118,15 +116,18 @@ const Latest = () => {
 
       <div className='w-[100%] justify-end'>
 
-        <div className='w-10/12 md:w-1/2 mx-auto flex my-3 items-center border-b-[1px] border-primary px-1'>
-          <input className='bg-transparent w-full py-4 font-light text-lg outline-none  placeholder:font-montserrat font-montserrat' onChange={(e)=>{ setSearch(e.target.value)}} placeholder='Start typing what you want ?' />
-         <div className='cursor-pointer' onClick={(e)=>{
-           searchResult()
-           router.push(`/get-posts/keywords:${search}/`)
+        <form onSubmit={(e) => {
+          searchResult(e)
+
+        }} className='w-10/12 md:w-1/2 mx-auto flex my-3 items-center border-b-[1px] border-primary px-1'>
+          <input className='bg-transparent w-full py-4 font-light text-lg outline-none  placeholder:font-montserrat font-montserrat' onChange={(e) => { setSearch(e.target.value) }} placeholder='Start typing what you want ?' />
+          <div className='cursor-pointer' onClick={(e) => {
+            searchResult(e)
+            router.push(`/get-posts/keywords:${search}/`)
           }}>
-         <SearchSVG  />
-           </div> 
-        </div>
+            <SearchSVG />
+          </div>
+        </form>
         <div className='mx-8  flex flex-wrap text-center justify-center'>
           {
             data.map((item, index) => {
@@ -141,7 +142,7 @@ const Latest = () => {
             })
           }
 
-         
+
         </div>
 
       </div>
@@ -172,15 +173,15 @@ const Latest = () => {
           {movieList?.map((item, index) => {
             if (ListType === 'compact') {
               return (
-                <CardCompact item={item} categoryId={categoryId} />
+                <CardCompact key={index} item={item} categoryId={categoryId} />
               )
             } else {
               return (
-                <CardExpanded item={item} categoryId={categoryId} />
+                <CardExpanded key={index} item={item} categoryId={categoryId} />
               )
             }
           })}
-           {movieList.length===0?<h1>No Data Found </h1>:null}
+          {movieList.length === 0 ? <h1>No Data Found </h1> : null}
         </div>
       </div>
     </div>
