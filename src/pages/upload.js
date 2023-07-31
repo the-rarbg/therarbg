@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useStyleRegistry } from 'styled-jsx';
 import { createTorrent } from '../service/service';
+import { Loader } from '../Common/Loader'
 
 const upload = () => {
 const[token,setToken]=useState("")
 const[loader,setLoader]=useState(false)
 const[formInput,setFormInput]=useState()
+const[fileInput,setFileInput]=useState([{ name: "" }])
 
 useEffect(()=>{
   return setToken(localStorage.getItem("access_token"));
 },[])
 
-const handleUpload =()=>{
+const handleUpload =(e)=>{
+  e.preventDefault()
   setLoader(true)
  let data ={
   name:formInput?.name ,
@@ -24,7 +27,7 @@ const handleUpload =()=>{
   size: formInput?.size,
   size_char: formInput?.size,
   thumbnail: "",
-  images: [],
+  images: ["https://freeimage.host/i/HZcK4OG"],
   username: formInput?.tag,
   imdb:formInput?.imdb,
   downloads: 1,
@@ -32,10 +35,13 @@ const handleUpload =()=>{
   leechers:1,
   info_hash: formInput?.hash,
 }
+setLoader(true)
   createTorrent(data,token).then((res)=>{
+    setLoader(false)
 
     console.log(res)
   }).catch((err)=>{
+    setLoader(false)
     console.log(err)
   })
 }
@@ -45,13 +51,25 @@ const handleChange =(e)=>{
    setFormInput({...formInput,[name]:value})
 }
 
+let addCreditFormFields = () => {
+  setFileInput([...fileInput, { name: "" }]);
+};
+let removeCreditFormFields = (i) => {
+  let newCreditFormValues = [...fileInput];
+  newCreditFormValues.splice(i, 1);
+  setFileInput(newCreditFormValues);
+};
+
 const cateArray = ['Anime', 'Games', 'Books', 'XXX', 'Documentaries', 'Other', 'Apps', 'Music', 'TV', 'Movies'];
  
 const languageArray = [ "english", "russian", "other","german","hindi"]
   return (
     <div>
+      {loader?<Loader/>:null}
       <div className='w-[50%] pb-5 m-auto'>
-        <div className="mt-[5rem] justify-center pt-5 pb-5 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30 flex relative">
+        
+        <div className='text-center justify-center mt-2'> <span className='text-[16px]  font-bold mt-3 pt-3'>You can get Image URL from : <a href="https://freeimage.host/" target="_blank">https://freeimage.host/</a></span>  </div>
+        <div className="mt-[3rem] justify-center pt-5 pb-2 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30 flex relative">
 
           <form onSubmit={handleUpload} className='w-[85%]'>
             <div className="grid gap-6 mb-6 md:grid-cols-2">
@@ -113,6 +131,25 @@ const languageArray = [ "english", "russian", "other","german","hindi"]
               </div>
 
             </div>
+
+            <div className="mb-6">
+              <label htmlFor="hash" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Add Images Urls</label>
+            {
+               fileInput.map((item,index)=>{
+                 return(
+                   <div className='flex relative'>
+                   <input type="text" name={"image"+index} id="hash" className="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Image url" value={formInput?.hash} onChange={handleChange} required />
+                  {index===0? <span className='flex ml-2 cursor-pointer center text-[25px] font-bold' onClick={()=>addCreditFormFields()}>+</span>
+                  :<span className='flex ml-2 cursor-pointer center text-[25px] font-bold' onClick={()=>removeCreditFormFields()}>-</span>
+               }
+               </div>
+                 )
+
+               })
+             }
+
+            
+            </div>
             <div className="mb-6">
               <label htmlFor="hash" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Torrent Hash</label>
               <input type="text" name="hash" id="hash" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="309626C8000F9C006782B097E7B6EAADD7F7C3E7" value={formInput?.hash} onChange={handleChange} required />
@@ -123,7 +160,7 @@ const languageArray = [ "english", "russian", "other","german","hindi"]
             </div>
             <div className="mb-6">
               <label htmlFor="tag" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Torrent Descriptions</label>
-              <textarea name="description" rows={6} id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={formInput?.description} onClick={handleChange} placeholder="" >
+              <textarea name="description" rows={6} id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={formInput?.description} onChange={handleChange} placeholder="" >
               </textarea>
             </div>
 
