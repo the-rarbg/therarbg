@@ -137,9 +137,9 @@ const languageArray = [ "english", "russian", "other","german","hindi"]
             {
                fileInput.map((item,index)=>{
                  return(
-                   <div className='flex relative'>
+                   <div key={index} className='flex relative'>
                    <input type="text" name={"image"+index} id="hash" className="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Image url" value={formInput?.hash} onChange={handleChange} required />
-                  {index===0? <span className='flex ml-2 cursor-pointer center text-[25px] font-bold' onClick={()=>addCreditFormFields()}>+</span>
+                  {index===0? <span className='flex ml-2 cursor-pointer center text-[25px] font-bold text-primary/70' onClick={()=>addCreditFormFields()}>+</span>
                   :<span className='flex ml-2 cursor-pointer center text-[25px] font-bold' onClick={()=>removeCreditFormFields()}>-</span>
                }
                </div>

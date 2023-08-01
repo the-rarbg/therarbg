@@ -1,10 +1,9 @@
 import '../styles/global.scss';
 import React from 'react';
-import Layout from "../layouts/layout";
-import type { AppProps } from 'next/app';
+import Layout from "../layouts/layout"
 import { ToastContainer } from 'react-toastify';
 
-const MyApp = ({ Component, pageProps }: AppProps) => (
+const MyApp = ({ Component, pageProps }) => (
   <Layout>
      <ToastContainer />
     <Component {...pageProps} />

@@ -48,8 +48,8 @@ setLoader(true)
     getProfileDetails(token).then((res)=>{
       setLoader(false)
       console.log("resprofile",res.data.access)
-  
-      router.push("/")
+     
+     window.location.href="/lendingPage/";
 
     }).catch((err)=>{
       setLoader(false)
