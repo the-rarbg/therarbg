@@ -3,14 +3,16 @@ import { createTorrent } from '../service/service';
 import { Loader } from '../Common/Loader'
 import ToastMsg from '../Common/ToastMsg';
 import { useRouter } from 'next/router';
+import Select from 'react-select';
+
 
 const upload = () => {
   const [token, setToken] = useState("")
   const [loader, setLoader] = useState(false)
   const [formInput, setFormInput] = useState()
   const [fileInput, setFileInput] = useState([{ name: "" }])
-  const[imageArray,setImageArray]=useState([])
-  const[errors,setErrors]=useState({})
+  const [imageArray, setImageArray] = useState([])
+  const [errors, setErrors] = useState({})
 
   const router = useRouter()
 
@@ -20,43 +22,53 @@ const upload = () => {
 
   const handleUpload = (e) => {
     e.preventDefault()
-   
-    if(!formInput?.name){
-      setErrors({...errors,name:"This is Mandatory Field"})
+
+    let _genre = selectedOption&& selectedOption.map((item,index)=>{
+      return item.value;
+    })
+    console.log("pp",_genre)
+
+
+    if (!formInput?.name) {
+      setErrors({ ...errors, name: "This is Mandatory Field" })
       return
     }
-    if(!formInput?.short_name){
-      setErrors({...errors,short_name:"This is Mandatory Field"})
+    if (!formInput?.short_name) {
+      setErrors({ ...errors, short_name: "This is Mandatory Field" })
       return
     }
-    if(!formInput?.language){
-      setErrors({...errors,language:"This is Mandatory Field"})
+    if (!formInput?.language) {
+      setErrors({ ...errors, language: "This is Mandatory Field" })
       return
     }
-    if(!formInput?.category_str){
-      setErrors({...errors,category_str:"This is Mandatory Field"})
+    if (!formInput?.category_str) {
+      setErrors({ ...errors, category_str: "This is Mandatory Field" })
       return
     }
-   
-    if(!formInput?.type){
-      setErrors({...errors,type:"This is Mandatory Field"})
+    if(formInput?.category_str==="Movies" || formInput?.category_str==="TV") {
+      setErrors({ ...errors, genre: "This is Mandatory Field" })
       return
     }
-    if(!formInput?.thumbnail){
-      setErrors({...errors,thumbnail:"This is Mandatory Field"})
+
+    if (!formInput?.type) {
+      setErrors({ ...errors, type: "This is Mandatory Field" })
       return
     }
-    if(!formInput?.hash){
-      setErrors({...errors,hash:"This is Mandatory Field"})
+    if (!formInput?.thumbnail) {
+      setErrors({ ...errors, thumbnail: "This is Mandatory Field" })
       return
     }
-    if(!formInput?.hash.length>70){
-      setErrors({...errors,hash:"Torrent Hash Length can not be greater than 70"})
+    if (!formInput?.hash) {
+      setErrors({ ...errors, hash: "This is Mandatory Field" })
       return
     }
-   
-    if(!formInput?.description){
-      setErrors({...errors,description:"This is Mandatory Field"})
+    if (!formInput?.hash.length > 70) {
+      setErrors({ ...errors, hash: "Torrent Hash Length can not be greater than 70" })
+      return
+    }
+
+    if (!formInput?.description) {
+      setErrors({ ...errors, description: "This is Mandatory Field" })
       return
     }
 
@@ -65,14 +77,14 @@ const upload = () => {
       category_str: formInput?.category_str,
       short_name: formInput?.short_name,
       descr: formInput?.description,
-     
+
       type: formInput?.type,
-      genre: ["Fantasy", "Thriller", "Romance"],
+      genre: _genre,
       language: formInput?.language,
       size: formInput?.size,
       size_char: formInput?.size,
       thumbnail: formInput?.thumbnail,
-      images:imageArray,
+      images: imageArray,
       imdb: formInput?.imdb,
       downloads: 1,
       seeders: 1,
@@ -83,22 +95,22 @@ const upload = () => {
     createTorrent(data, token).then((res) => {
       setLoader(false)
       console.log(res)
-      ToastMsg("File Uploaded Successfully","success")
+      ToastMsg("File Uploaded Successfully", "success")
       router.push("/lendingPage/")
     }).catch((err) => {
       setLoader(false)
-      
-      if(err?.response?.status===401){
-        ToastMsg("Session Expired !!","error")
+
+      if (err?.response?.status === 401) {
+        ToastMsg("Session Expired !!", "error")
         localStorage.clear()
-        window.location.href="/login"
+        window.location.href = "/login"
       }
       console.log(err)
     })
   }
 
 
-console.log("pppp",errors)
+  console.log("pppp", errors)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setErrors({})
@@ -112,17 +124,32 @@ console.log("pppp",errors)
     let newCreditFormValues = [...fileInput];
     let temp = [...imageArray]
     temp.splice(i, 1);
-    
+
     newCreditFormValues.splice(i, 1);
     setFileInput(newCreditFormValues);
     setImageArray(temp)
   };
 
+  const [selectedOption, setSelectedOption] = useState(null);
   const cateArray = ['Anime', 'Games', 'Books', 'XXX', 'Documentaries', 'Other', 'Apps', 'Music', 'TV', 'Movies'];
 
   const languageArray = ["english", "russian", "other", "german", "hindi"]
   const TypeList = ['3D', '3DS', 'AAC', 'Album', 'Android', 'Anime', 'Audiobook', 'Bollywood', 'Box Set', 'Cartoon', 'Comics', 'Concerts', 'DS', 'DVD', 'Discography', 'Divx/Xvid', 'Documentary', 'Dreamcast', 'Dual Audio', 'Dubbed', 'Dubs/Dual Audio', 'E-Books', 'Emulation', 'GameCube', 'Games', 'HD', 'HEVC/x265', 'Hentai', 'Images', 'Linux', 'Lossless', 'MP3', 'Mac', 'Magazine', 'Mobile Phone', 'Mp4', 'Nulled Script', 'Other', 'PC Game', 'PC Software', 'PS1', 'PS2', 'PS3', 'PS4', 'PSP', 'Picture', 'Radio', 'Raw', 'SD', 'SVCD/VCD', 'Single', 'Sounds', 'Subbed', 'Switch', 'Tutorials', 'UHD', 'Video', 'Wii', 'Xbox360', 'bluray', 'h.264/x264', 'iOS', 'web']
-  console.log("image",imageArray)
+  const genre = [{ value: 'film-noir', label: "Film Noir" }, { valye: 'documentary', label: "Documentary" }, { value: 'adventure', label: "Adventure" }, { value: 'music', label: "Music" },
+  { value: 'romance', label: "Romance" }, { value: 'animation', label: "Animation" },
+  { value: 'crime', label: "Crime" }, { value: 'comedy', label: "Comedy" },
+  { value: 'talk-show', label: "Talk Show" }, { value: 'sport', label: "Sport" },
+  { value: 'news', label: "News" }, { value: 'biography', label: "Biography" },
+  { value: 'history', label: "History" }, { value: 'musical', label: "Musical" },
+  { value: 'horror', label: "Horror" }, { value: 'action', label: "Action" },
+  { value: 'sci-fi', label: "Sci Fi" }, { value: 'reality-tv', label: "Reality tv" },
+  { value: 'game-show', label: "Game Show" }, { value: 'war', label: "War" }, { value: 'adult', label: "Adult" },
+  { value: 'drama', label: "Drama" }, { value: 'mystery', label: "Mystery" }, { value: 'thriller', label: "Thriller" },
+  { value: 'western', label: "Western" }, { value: 'short', label: "Short" }, { value: 'fantasy', label: "Fantasy" },
+  { value: 'family', label: "Family" }]
+
+  console.log("sleect",selectedOption)
+
   return (
     <div>
       {loader ? <Loader /> : null}
@@ -135,13 +162,13 @@ console.log("pppp",errors)
             <div className="grid gap-6 mb-6 md:grid-cols-2">
               <div>
                 <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title name</label>
-                <input type="text" id="first_name" name="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Movie Name" value={formInput?.name} onChange={handleChange}  />
+                <input type="text" id="first_name" name="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Movie Name" value={formInput?.name} onChange={handleChange} />
                 <span className='text-red-400 text-[13px] '>{errors?.name}</span>
               </div>
 
               <div>
                 <label htmlFor="file" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Short Name</label>
-                <input type="text" id="id" name="short_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-[7px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Short Name" value={formInput?.short_name} onChange={handleChange}  />
+                <input type="text" id="id" name="short_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-[7px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Short Name" value={formInput?.short_name} onChange={handleChange} />
                 <span className='text-red-400 text-[13px] '>{errors?.short_name}</span>
               </div>
 
@@ -179,6 +206,22 @@ console.log("pppp",errors)
                 <span className='text-red-400 text-[13px] '>{errors?.category_str}</span>
               </div>
               <div>
+                <label htmlFor="category_str" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                <Select
+                className="react-select-container"
+                classNamePrefix="react-select"
+                  defaultValue={selectedOption}
+                  onChange={setSelectedOption}
+                  isMulti={true}
+                  options={genre}
+                  isSearchable
+
+                />
+                <span className='text-red-400 text-[13px] '>{errors?.genre}</span>
+              </div>
+
+
+              <div>
                 <label htmlFor="language" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
                 <select name="type" id="language" className="bg-gray-50 border cursor-pointer border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={formInput?.type} onChange={handleChange} placeholder="Flowbite" >
                   <option>
@@ -202,9 +245,9 @@ console.log("pppp",errors)
 
 
               <div className='flex relative'>
-                <input type="text" name="thumbnail" id="hash" className="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Thumbnail image url" value={formInput?.thumbnail} onChange={handleChange}  />
+                <input type="text" name="thumbnail" id="hash" className="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Thumbnail image url" value={formInput?.thumbnail} onChange={handleChange} />
 
-               
+
               </div>
               <span className='text-red-400 text-[13px] '>{errors?.thumbnail}</span>
 
@@ -217,12 +260,12 @@ console.log("pppp",errors)
                 fileInput.map((item, index) => {
                   return (
                     <div key={index} className='flex relative'>
-                      <input type="text" name={"image" + index} id="hash" className="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Image url" value={formInput?.[`image${index}`]} onChange={(e)=>{
-                        
-                         let _data = [...imageArray]
-                         _data[index]=e.target.value;
-                         setImageArray(_data);
-                      }}  />
+                      <input type="text" name={"image" + index} id="hash" className="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Image url" value={formInput?.[`image${index}`]} onChange={(e) => {
+
+                        let _data = [...imageArray]
+                        _data[index] = e.target.value;
+                        setImageArray(_data);
+                      }} />
                       {index === 0 ? <span className='flex ml-2 cursor-pointer center text-[25px] font-bold text-primary/70' onClick={() => addCreditFormFields()}>+</span>
                         : <span className='flex ml-2 cursor-pointer center text-[25px] font-bold' onClick={() => removeCreditFormFields()}>-</span>
                       }
@@ -236,10 +279,10 @@ console.log("pppp",errors)
             </div>
             <div className="mb-6">
               <label htmlFor="hash" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Torrent Hash</label>
-              <input type="text" name="hash" id="hash" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="309626C8000F9C006782B097E7B6EAADD7F7C3E7" value={formInput?.hash} onChange={handleChange}  />
+              <input type="text" name="hash" id="hash" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="309626C8000F9C006782B097E7B6EAADD7F7C3E7" value={formInput?.hash} onChange={handleChange} />
               <span className='text-red-400 text-[13px] '>{errors?.hash}</span>
             </div>
-           
+
             <div className="mb-6">
               <label htmlFor="tag" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Torrent Descriptions</label>
               <textarea name="description" rows={6} id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={formInput?.description} onChange={handleChange} placeholder="" >
