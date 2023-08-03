@@ -54,10 +54,7 @@ const upload = () => {
       setErrors({...errors,hash:"Torrent Hash Length can not be greater than 70"})
       return
     }
-    if(!formInput?.tag){
-      setErrors({...errors,tag:"This is Mandatory Field"})
-      return
-    }
+   
     if(!formInput?.description){
       setErrors({...errors,description:"This is Mandatory Field"})
       return
@@ -76,7 +73,6 @@ const upload = () => {
       size_char: formInput?.size,
       thumbnail: formInput?.thumbnail,
       images:imageArray,
-      username: formInput?.tag,
       imdb: formInput?.imdb,
       downloads: 1,
       seeders: 1,
@@ -243,11 +239,7 @@ console.log("pppp",errors)
               <input type="text" name="hash" id="hash" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="309626C8000F9C006782B097E7B6EAADD7F7C3E7" value={formInput?.hash} onChange={handleChange}  />
               <span className='text-red-400 text-[13px] '>{errors?.hash}</span>
             </div>
-            <div className="mb-6">
-              <label htmlFor="tag" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-              <input name="tag" type="text" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="john.doe@company.com" value={formInput?.tag} onChange={handleChange}  />
-              <span className='text-red-400 text-[13px] '>{errors?.tag}</span>
-            </div>
+           
             <div className="mb-6">
               <label htmlFor="tag" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Torrent Descriptions</label>
               <textarea name="description" rows={6} id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={formInput?.description} onChange={handleChange} placeholder="" >
