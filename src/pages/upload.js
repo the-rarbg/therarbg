@@ -205,20 +205,7 @@ const upload = () => {
                 </select>
                 <span className='text-red-400 text-[13px] '>{errors?.category_str}</span>
               </div>
-              <div>
-                <label htmlFor="category_str" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                <Select
-                className="react-select-container"
-                classNamePrefix="react-select"
-                  defaultValue={selectedOption}
-                  onChange={setSelectedOption}
-                  isMulti={true}
-                  options={genre}
-                  isSearchable
-
-                />
-                <span className='text-red-400 text-[13px] '>{errors?.genre}</span>
-              </div>
+         
 
 
               <div>
@@ -239,6 +226,29 @@ const upload = () => {
               </div>
 
             </div>
+            <div className="mb-6">
+                <label htmlFor="category_str" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                <Select
+                className="react-select-container"
+                classNamePrefix="react-select"
+                  defaultValue={selectedOption}
+                  onChange={setSelectedOption}
+                  isMulti={true}
+                  options={genre}
+                  isSearchable
+                  theme={(theme) => ({
+                    ...theme,
+                    colors: {
+                      ...theme.colors,
+                      primary25: '#55aa7b',
+                     
+                    },
+                  })}
+
+                />
+                <span className='text-red-400 text-[13px] '>{errors?.genre}</span>
+              </div>
+
 
             <div className="mb-6">
               <label htmlFor="hash" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Thumbnail Images Urls</label>
