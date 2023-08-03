@@ -20,7 +20,7 @@ const upload = () => {
 
   const handleUpload = (e) => {
     e.preventDefault()
-    setLoader(true)
+   
     if(!formInput?.name){
       setErrors({...errors,name:"This is Mandatory Field"})
       return
@@ -29,8 +29,8 @@ const upload = () => {
       setErrors({...errors,short_name:"This is Mandatory Field"})
       return
     }
-    if(!formInput?.langauge){
-      setErrors({...errors,langauge:"This is Mandatory Field"})
+    if(!formInput?.language){
+      setErrors({...errors,language:"This is Mandatory Field"})
       return
     }
     if(!formInput?.category_str){
@@ -71,7 +71,7 @@ const upload = () => {
      
       type: formInput?.type,
       genre: ["Fantasy", "Thriller", "Romance"],
-      language: formInput?.langauge,
+      language: formInput?.language,
       size: formInput?.size,
       size_char: formInput?.size,
       thumbnail: formInput?.thumbnail,
@@ -93,6 +93,7 @@ const upload = () => {
       setLoader(false)
       
       if(err?.response?.status===401){
+        ToastMsg("Session Expired !!","error")
         localStorage.clear()
         window.location.href="/login"
       }
@@ -101,9 +102,10 @@ const upload = () => {
   }
 
 
-
+console.log("pppp",errors)
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setErrors({})
     setFormInput({ ...formInput, [name]: value })
   }
 
@@ -137,19 +139,21 @@ const upload = () => {
             <div className="grid gap-6 mb-6 md:grid-cols-2">
               <div>
                 <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title name</label>
-                <input type="text" id="first_name" name="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Movie Name" value={formInput?.name} onChange={handleChange} required />
+                <input type="text" id="first_name" name="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Movie Name" value={formInput?.name} onChange={handleChange}  />
+                <span className='text-red-400 text-[13px] '>{errors?.name}</span>
               </div>
 
               <div>
                 <label htmlFor="file" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Short Name</label>
-                <input type="text" id="id" name="short_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-[7px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Short Name" value={formInput?.short_name} onChange={handleChange} required />
+                <input type="text" id="id" name="short_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-[7px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Short Name" value={formInput?.short_name} onChange={handleChange}  />
+                <span className='text-red-400 text-[13px] '>{errors?.short_name}</span>
               </div>
 
 
               <div>
                 <label htmlFor="language" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Language</label>
-                <select name="language" id="language" className="bg-gray-50 cursor-pointer border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={formInput?.language} onChange={handleChange} placeholder="Flowbite" >
-                  <option>
+                <select name="language" id="language" className="bg-gray-50 cursor-pointer border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={formInput?.language} onChange={handleChange} placeholder="Flowbite"  >
+                  <option >
                     Select
                   </option>
                   {languageArray.map((item, index) => {
@@ -160,10 +164,11 @@ const upload = () => {
                     )
                   })}
                 </select>
+                <span className='text-red-400 text-[13px] '>{errors?.language}</span>
               </div>
               <div>
-                <label htmlFor="language" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                <select id="language" name="category_str" className="bg-gray-50 cursor-pointer border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={formInput?.category_str} onChange={handleChange} placeholder="Flowbite" >
+                <label htmlFor="category_str" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                <select id="category_str" name="category_str" className="bg-gray-50 cursor-pointer border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={formInput?.category_str} onChange={handleChange} placeholder="Flowbite" >
                   <option>
                     Select
                   </option>
@@ -175,6 +180,7 @@ const upload = () => {
                     )
                   })}
                 </select>
+                <span className='text-red-400 text-[13px] '>{errors?.category_str}</span>
               </div>
               <div>
                 <label htmlFor="language" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
@@ -190,6 +196,7 @@ const upload = () => {
                     )
                   })}
                 </select>
+                <span className='text-red-400 text-[13px] '>{errors?.type}</span>
               </div>
 
             </div>
@@ -199,11 +206,11 @@ const upload = () => {
 
 
               <div className='flex relative'>
-                <input type="text" name="thumbnail" id="hash" className="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Thumbnail image url" value={formInput?.thumbnail} onChange={handleChange} required />
+                <input type="text" name="thumbnail" id="hash" className="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Thumbnail image url" value={formInput?.thumbnail} onChange={handleChange}  />
 
-
+               
               </div>
-
+              <span className='text-red-400 text-[13px] '>{errors?.thumbnail}</span>
 
 
             </div>
@@ -219,7 +226,7 @@ const upload = () => {
                          let _data = [...imageArray]
                          _data[index]=e.target.value;
                          setImageArray(_data);
-                      }} required />
+                      }}  />
                       {index === 0 ? <span className='flex ml-2 cursor-pointer center text-[25px] font-bold text-primary/70' onClick={() => addCreditFormFields()}>+</span>
                         : <span className='flex ml-2 cursor-pointer center text-[25px] font-bold' onClick={() => removeCreditFormFields()}>-</span>
                       }
@@ -233,24 +240,27 @@ const upload = () => {
             </div>
             <div className="mb-6">
               <label htmlFor="hash" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Torrent Hash</label>
-              <input type="text" name="hash" id="hash" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="309626C8000F9C006782B097E7B6EAADD7F7C3E7" value={formInput?.hash} onChange={handleChange} required />
+              <input type="text" name="hash" id="hash" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="309626C8000F9C006782B097E7B6EAADD7F7C3E7" value={formInput?.hash} onChange={handleChange}  />
+              <span className='text-red-400 text-[13px] '>{errors?.hash}</span>
             </div>
             <div className="mb-6">
               <label htmlFor="tag" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-              <input name="tag" type="text" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="john.doe@company.com" value={formInput?.tag} onChange={handleChange} required />
+              <input name="tag" type="text" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="john.doe@company.com" value={formInput?.tag} onChange={handleChange}  />
+              <span className='text-red-400 text-[13px] '>{errors?.tag}</span>
             </div>
             <div className="mb-6">
               <label htmlFor="tag" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Torrent Descriptions</label>
               <textarea name="description" rows={6} id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={formInput?.description} onChange={handleChange} placeholder="" >
               </textarea>
+              <span className='text-red-400 text-[13px] '>{errors?.description}</span>
             </div>
 
-            <div className="flex items-start mb-6">
+            {/* <div className="flex items-start mb-6">
               <div className="flex items-center h-5">
-                <input id="remember" type="checkbox" value="" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required />
+                <input id="remember" type="checkbox" value="" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"  />
               </div>
               <label htmlFor="remember" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" className="text-primary-600 hover:underline dark:text-primary-500">terms and conditions</a>.</label>
-            </div>
+            </div> */}
             <button type="submit" className="bg-primary/10 text-primary border-primary my-3 hover:bg-primary/30 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-1.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700" style={{ border: "solid 0.5px" }} >Submit</button>
           </form>
 
