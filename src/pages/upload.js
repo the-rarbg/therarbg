@@ -4,6 +4,7 @@ import { Loader } from '../Common/Loader'
 import ToastMsg from '../Common/ToastMsg';
 import { useRouter } from 'next/router';
 import Select from 'react-select';
+import { formatBytes } from '../Common/CardExpanded';
 
 
 const upload = () => {
@@ -54,6 +55,14 @@ const upload = () => {
       setErrors({ ...errors, type: "This is Mandatory Field" })
       return
     }
+    if (!formInput?.size) {
+      setErrors({ ...errors, size: "This is Mandatory Field" })
+      return
+    }
+    if (!formInput?.Imdb) {
+      setErrors({ ...errors, Imdb: "This is Mandatory Field" })
+      return
+    }
     if (!formInput?.thumbnail) {
       setErrors({ ...errors, thumbnail: "This is Mandatory Field" })
       return
@@ -82,10 +91,10 @@ const upload = () => {
       genre: _genre,
       language: formInput?.language,
       size: formInput?.size,
-      size_char: formInput?.size,
+      size_char:formatBytes(formInput?.size),
       thumbnail: formInput?.thumbnail,
       images: imageArray,
-      imdb: formInput?.imdb,
+      imdb: formInput?.Imdb,
       downloads: 1,
       seeders: 1,
       leechers: 1,
@@ -205,6 +214,7 @@ const upload = () => {
                 </select>
                 <span className='text-red-400 text-[13px] '>{errors?.category_str}</span>
               </div>
+
          
 
 
@@ -224,10 +234,36 @@ const upload = () => {
                 </select>
                 <span className='text-red-400 text-[13px] '>{errors?.type}</span>
               </div>
+              <div >
+              <label htmlFor="hash" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Size (in Bytes)</label>
+
+
+              <div className='flex relative'>
+                <input type="text" name="size" maxLength={11} id="hash" className="bg-gray-50 mb-2 relative border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="987897" value={formInput?.size} onChange={handleChange} />
+                <span className='text-[12px] absolute text-green-400  right-5 top-[12px]'>{formatBytes(formInput?.size)}</span>
+
+              </div>
+              <span className='text-red-400 text-[13px] '>{errors?.size}</span>
+
+
+            </div>
+            <div >
+              <label htmlFor="hash" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Imdb ID</label>
+
+
+              <div className='flex relative'>
+                <input type="text" name="Imdb" id="hash" className="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="tt34057778" value={formInput?.Imdb} onChange={handleChange} />
+
+                
+              </div>
+              <span className='text-red-400 text-[13px] '>{errors?.Imdb}</span>
+
+
+            </div>
 
             </div>
             <div className="mb-6">
-                <label htmlFor="category_str" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                <label htmlFor="category_str" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Genre</label>
                 <Select
                 className="react-select-container"
                 classNamePrefix="react-select"
