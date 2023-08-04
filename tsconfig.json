@@ -46,8 +46,10 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
     ".storybook/*.ts",
     "src/pages/register.js",
     "src/pages/login.js"
-, "src/pages/top-ten-post/latest.js", "src/Common/Header.js", "src/pages/upload.js", "src/pages/index.js"  ]
+, "src/pages/top-ten-post/latest.js", "src/Common/Header.js", "src/pages/upload.js", "src/pages/index.js", "src/pages/search.js"  ]
 }

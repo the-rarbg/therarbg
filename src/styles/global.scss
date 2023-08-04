@@ -244,7 +244,29 @@ table, tr, td{
 
 
 
+.react-select-container .react-select__control {
+  background: rgb(74 85 104 / 1);
+  background-color: #34495E;
+}
+.react-select__menu{
+  background-color: #34495E;
+  
+}
+.react-select__menu-list{
+  background-color: #34495E;
+ 
 
+}
+.react-select__menu-list :hover{
+  color: #34495E !important;
+}
 
-
-
+.react-select__option{
+  color: #34495E ;
+}
+.css-1p3m7a8-multiValue{
+background-color: #55aa7b !important;
+}
+.css-qbdosj-Input{
+  color: #34495E !important;
+}

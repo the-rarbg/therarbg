@@ -184,7 +184,7 @@ const Details = () => {
           </div>
         </div>
         <br />
-        <div className={`grid gap-2 mb-6 md:grid-cols-${data?.imdb_data?.video_list[0]?.key?3:2}`}>
+        <div className={`grid gap-2 mb-6 ${data?.imdb_data?.video_list[0]?.key?"md:grid-cols-3":"md:grid-cols-2"}`}>
           <div>
             <div className='flex space-x-4 text-gray-500 text-[13px] '>
               <span className={`cursor-pointer mb-[5px]  px-[0.5rem] rounded  ${highligth==="Files"? "bg-primary/10":""}`} onClick={()=>setHighLight("Files")} >Files</span>
@@ -255,21 +255,21 @@ const Details = () => {
         </div>
 
         <div className="w-[100%] mt-[2rem] p-10 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30 justify-start inline-grid relative">
-          <div className='mb-2 inline-grid'>
+          <div className='mb-2  w-[90%]'>
             {
               commentList?.map((item, index) => {
                 return (
                   <div className='p-3 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30'>
                     <h1>{item?.info?.user}:</h1><span>
-                      {item?.comment || "This sddjksd kjhsdkj"}
+                      {item?.comment || "This IS A GOOD movie"}
                     </span>
                   </div>
                 )
               })
             }
           </div>
-          <div className='mb-2 inline-grid'>
-            <input type="text" className='border-gray-200 w-[880px] rounded border-opacity-30 text-[12px] bg-gray-200 bg-opacity-10 p-2 px-3 text-gray-500' onChange={(e) => setComment(e.target.value)} placeholder="Write your comments here" />
+          <div className='mb-2 w-[90%]'>
+            <input type="text" className='border-gray-200 w-[90%] rounded border-opacity-30 text-[12px] bg-gray-200 bg-opacity-10 p-2 px-3 text-gray-500' onChange={(e) => setComment(e.target.value)} placeholder="Write your comments here" />
             <button onClick={postCommentInfo} className='px-2 py-[2.5px] rounded w-[100px] bg-primary/10 text-primary border-primary my-4 text-xs hover:bg-primary/30' style={{ border: "solid 0.5px", fontWeight: "400" }} >POST</button>
           </div>
         </div>
