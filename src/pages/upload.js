@@ -15,6 +15,7 @@ const upload = () => {
   const [imageArray, setImageArray] = useState([])
   const [errors, setErrors] = useState({})
 
+  const [selectedOption, setSelectedOption] = useState(null);
   const router = useRouter()
 
   useEffect(() => {
@@ -23,8 +24,8 @@ const upload = () => {
 
   const handleUpload = (e) => {
     e.preventDefault()
-
-    let _genre = selectedOption&& selectedOption.map((item,index)=>{
+    let _genre=[]
+     _genre = selectedOption&& selectedOption.map((item,index)=>{
       return item.value;
     })
     console.log("pp",_genre)
@@ -47,8 +48,11 @@ const upload = () => {
       return
     }
     if(formInput?.category_str==="Movies" || formInput?.category_str==="TV") {
-      setErrors({ ...errors, genre: "This is Mandatory Field" })
-      return
+    if(!selectedOption||selectedOption?.length===0){
+        setErrors({ ...errors, genre: "This is Mandatory Field" })
+        return
+      }
+      
     }
 
     if (!formInput?.type) {
@@ -123,7 +127,12 @@ const upload = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setErrors({})
+    if(name=="size"){
+      setFormInput({...formInput,[name]:value.replace(/[^0-9{" "}]/g, '')})
+    }
+    else{
     setFormInput({ ...formInput, [name]: value })
+    }
   }
 
   let addCreditFormFields = () => {
@@ -139,7 +148,7 @@ const upload = () => {
     setImageArray(temp)
   };
 
-  const [selectedOption, setSelectedOption] = useState(null);
+ 
   const cateArray = ['Anime', 'Games', 'Books', 'XXX', 'Documentaries', 'Other', 'Apps', 'Music', 'TV', 'Movies'];
 
   const languageArray = ["english", "russian", "other", "german", "hindi"]
@@ -158,6 +167,10 @@ const upload = () => {
   { value: 'family', label: "Family" }]
 
   console.log("sleect",selectedOption)
+  useEffect(()=>{
+setErrors({})
+  },[selectedOption])
+  console.log(selectedOption)
 
   return (
     <div>
