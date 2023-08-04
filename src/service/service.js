@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_BASE = 'https://therarbg.com';
+const API_BASE = 'https://t-rb.org/';
 let token;
 
 const headersApplicationJson = {
@@ -43,11 +43,20 @@ export const getProfileDetails = (token) => {
 
 
 export const getListComment = (eid,token) => {
-  let url = `${API_BASE}/user/api/v1/list-comment/${eid}/`;
-  return axios.get(url, { headers: {
+
+  let headers  ={
     "Content-Type": "application/json",
     "Authorization":"Bearer "+token
-  } })
+  }
+
+  let header  ={
+    "Content-Type": "application/json",
+   
+  }
+  let temp = token?headers:header;
+
+  let url = `${API_BASE}/user/api/v1/list-comment/${eid}/`;
+  return axios.get(url, { headers:temp })
 }
 
 

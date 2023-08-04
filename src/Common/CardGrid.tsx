@@ -21,6 +21,7 @@ interface CardProps {
 }
 
 const CardExpanded = (props: CardProps) => {
+  console.log("pp",props)
   const router = useRouter();
   let name = props.item[`name`];
   let time = new Date(props.item[`timestamp`]);
@@ -47,7 +48,7 @@ const CardExpanded = (props: CardProps) => {
       </span>
       <span>・</span>
       <span >
-        {formatBytes(props.item['s'])}
+        {formatBytes(props.item['size']||props.item['s'])}
       </span>
     </div>
   </div>);
