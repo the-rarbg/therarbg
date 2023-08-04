@@ -48,7 +48,7 @@ const CardExpanded = (props: CardProps) => {
       </span>
       <span>・</span>
       <span >
-        {formatBytes(props.item['size'])}
+        {formatBytes(props.item['size']||props.item['s'])}
       </span>
     </div>
   </div>);
