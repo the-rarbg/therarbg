@@ -9,7 +9,7 @@ const Dashboard = () => {
 
   const [loader, setLoader] = useState(false)
   const [userData, setUserData] = useState({})
-  const[list,setList]=useState([])
+  const [list, setList] = useState([])
 
   useEffect(() => {
 
@@ -38,39 +38,39 @@ const Dashboard = () => {
   }
   return (
     <>
-    <div className="flex justify-center">
-    <div className='text-center mt-4 text-[32px] font-bold w-[95%]'>
-      {loader ? <Loader /> : null}
-      <h1>Dashboard</h1>
-      <div className='text-[16px] font-md text-right mt-3'>
-        <h1> { "Welcome "+userData?.first_name + " " + userData?.last_name}</h1>
+      <div className="flex justify-center">
+        <div className='text-center mt-4 text-[32px] font-bold w-[95%]'>
+          {loader ? <Loader /> : null}
+          <h1>Dashboard</h1>
+          <div className='text-[16px] font-md text-right mt-3'>
+            <h1> {"Welcome " + userData?.first_name + " " + userData?.last_name}</h1>
+          </div>
+
+
+
+        </div>
+
       </div>
+      <br />
+      <br />
 
+      <div className='w-auto mb-[3rem] mx-4 md:mx-[9rem] bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
 
-    
-    </div>
-    
-    </div>
-    <br/>
-    <br/>
+        <div className={`flex-1 px-4 flex-wrap py-8 justify-center`}>
+          {list.length > 0 ? list?.map((item, index) => {
 
-<div className='w-auto mb-[3rem] mx-4 md:mx-[9rem] bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
+            return (
+              <>
+                <Card item={item} categoryId={item?.category_str} />
 
-<div className={`flex-1 px-4 flex-wrap py-8 justify-center`}>
-  {list?.map((item, index) => {
-  
-      return (
-        <>
-         <Card item={item} categoryId={item?.category_str} />
-      
-        </>
-       
-      )
-  
-  })}
-</div>
-</div>
-</>
+              </>
+
+            )
+
+          }) : <h1>No Data Fount</h1>}
+        </div>
+      </div>
+    </>
   )
 }
 
