@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_BASE = 'https://t-rb.org/';
+const API_BASE = 'https://t-rb.org';
 let token;
 
 const headersApplicationJson = {
@@ -58,6 +58,20 @@ export const getListComment = (eid,token) => {
   let url = `${API_BASE}/user/api/v1/list-comment/${eid}/`;
   return axios.get(url, { headers:temp })
 }
+
+export const getTorrentList = (token) => {
+
+  let headers  ={
+    "Content-Type": "application/json",
+    "Authorization":"Bearer "+token
+  }
+
+
+
+  let url = `${API_BASE}/api/v1/list-trb-post/`;
+  return axios.get(url, { headers:headers })
+}
+
 
 
 export const postComment = (data,token) => {
