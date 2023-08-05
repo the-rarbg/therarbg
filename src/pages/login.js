@@ -47,9 +47,10 @@ setLoader(true)
   const handleProfileDetails =(token)=>{
     getProfileDetails(token).then((res)=>{
       setLoader(false)
-      console.log("resprofile",res.data.access)
-     
-     window.location.href="/lendingPage/";
+      console.log("resprofile",res.data)
+      localStorage.setItem("user_profile",JSON.stringify(res?.data))
+ 
+      window.location.href="/lendingPage/";
 
     }).catch((err)=>{
       setLoader(false)

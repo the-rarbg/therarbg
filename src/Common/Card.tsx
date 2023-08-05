@@ -37,15 +37,16 @@ const Card = (props: CardProps) => {
         {props?.item?.name}
       </span>
     </div>
+   
     <div className="flex text-off-white text-[10px] h-auto pt-1.5 justify-end long-and-truncated font-light gap-4">
       <span className='w-14'>
         {props.item['c'] || props.categoryId}
       </span>
-      <span>・</span>
+      <span>{" "}</span>
       <span className='w-14'>
-        {time.getDate()}-{time.getMonth()+1}-{time.getFullYear()}
+        {time.getDate()||""}-{time.getMonth()+1||""}-{time.getFullYear()||""}
       </span>
-      <span>・</span>
+      <span>{" "}</span>
       <span className='w-14'>
         {formatBytes(props.item['size'])}
       </span>

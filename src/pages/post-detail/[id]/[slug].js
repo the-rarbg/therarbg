@@ -124,9 +124,6 @@ const Details = () => {
       autoplay: 1,
     },
   };
-  const _onReady = (event) => {
-    event.target.pauseVideo();
-  }
 
   return (
     <div>
@@ -210,7 +207,7 @@ const Details = () => {
             <span className='pl-5'>Trailer</span>
 
             <YouTube videoId={data?.imdb_data?.video_list[0]?.key} style={{borderRadius:"8px"}}      
-              opts={opts} onReady={_onReady} />
+              opts={opts}  />
 
 
           </div>
