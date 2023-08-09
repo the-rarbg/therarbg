@@ -7,7 +7,7 @@ import Select from 'react-select';
 import { formatBytes } from '../Common/CardExpanded';
 
 
-const upload = () => {
+const Upload = () => {
   const [token, setToken] = useState("")
   const [loader, setLoader] = useState(false)
   const [formInput, setFormInput] = useState()
@@ -17,18 +17,24 @@ const upload = () => {
 
   const [selectedOption, setSelectedOption] = useState(null);
   const router = useRouter()
-
+  const { data } = router.query;
   useEffect(() => {
+    let temp = data && JSON.parse(data)
+    setFormInput(temp)
+    setImageArray(temp?.images)
+    setSelectedOption(temp?.genre)
+    setFileInput(temp?.images)
     return setToken(localStorage.getItem("access_token"));
   }, [])
-
+  console.log("formInput", formInput)
+  console.log("select", selectedOption)
   const handleUpload = (e) => {
     e.preventDefault()
-    let _genre=[]
-     _genre = selectedOption&& selectedOption.map((item,index)=>{
+    let _genre = []
+    _genre = selectedOption && selectedOption.map((item, index) => {
       return item.value;
     })
-    console.log("pp",_genre)
+    console.log("pp", _genre)
 
 
     if (!formInput?.name) {
@@ -47,12 +53,12 @@ const upload = () => {
       setErrors({ ...errors, category_str: "This is Mandatory Field" })
       return
     }
-    if(formInput?.category_str==="Movies" || formInput?.category_str==="TV") {
-    if(!selectedOption||selectedOption?.length===0){
+    if (formInput?.category_str === "Movies" || formInput?.category_str === "TV") {
+      if (!selectedOption || selectedOption?.length === 0) {
         setErrors({ ...errors, genre: "This is Mandatory Field" })
         return
       }
-      
+
     }
 
     if (!formInput?.type) {
@@ -63,25 +69,25 @@ const upload = () => {
       setErrors({ ...errors, size: "This is Mandatory Field" })
       return
     }
-    if (!formInput?.Imdb) {
-      setErrors({ ...errors, Imdb: "This is Mandatory Field" })
+    if (!formInput?.imdb) {
+      setErrors({ ...errors, imdb: "This is Mandatory Field" })
       return
     }
     if (!formInput?.thumbnail) {
       setErrors({ ...errors, thumbnail: "This is Mandatory Field" })
       return
     }
-    if (!formInput?.hash) {
-      setErrors({ ...errors, hash: "This is Mandatory Field" })
+    if (!formInput?.info_hash) {
+      setErrors({ ...errors, info_hash: "This is Mandatory Field" })
       return
     }
-    if (!formInput?.hash.length > 70) {
-      setErrors({ ...errors, hash: "Torrent Hash Length can not be greater than 70" })
+    if (!formInput?.info_hash.length > 70) {
+      setErrors({ ...errors, info_hash: "Torrent Hash Length can not be greater than 70" })
       return
     }
 
-    if (!formInput?.description) {
-      setErrors({ ...errors, description: "This is Mandatory Field" })
+    if (!formInput?.descr) {
+      setErrors({ ...errors, descr: "This is Mandatory Field" })
       return
     }
 
@@ -89,20 +95,20 @@ const upload = () => {
       name: formInput?.name,
       category_str: formInput?.category_str,
       short_name: formInput?.short_name,
-      descr: formInput?.description,
+      descr: formInput?.descr,
 
       type: formInput?.type,
       genre: _genre,
       language: formInput?.language,
       size: formInput?.size,
-      size_char:formatBytes(formInput?.size),
+      size_char: formatBytes(formInput?.size),
       thumbnail: formInput?.thumbnail,
       images: imageArray,
-      imdb: formInput?.Imdb,
+      imdb: formInput?.imdb,
       downloads: 1,
       seeders: 1,
       leechers: 1,
-      info_hash: formInput?.hash,
+      info_hash: formInput?.info_hash,
     }
     setLoader(true)
     createTorrent(data, token).then((res) => {
@@ -127,11 +133,14 @@ const upload = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setErrors({})
-    if(name=="size"){
-      setFormInput({...formInput,[name]:value.replace(/[^0-9{" "}]/g, '')})
+    if (name == "size") {
+      setFormInput({ ...formInput, [name]: value.replace(/[^0-9{" "}]/g, '') })
     }
-    else{
-    setFormInput({ ...formInput, [name]: value })
+    else if (name === "info_hash") {
+      setFormInput({ ...formInput, [name]: value.toUpperCase().replace(/[^0-9a-zA-Z{" "}]/g, '') })
+    }
+    else {
+      setFormInput({ ...formInput, [name]: value })
     }
   }
 
@@ -148,7 +157,7 @@ const upload = () => {
     setImageArray(temp)
   };
 
- 
+
   const cateArray = ['Anime', 'Games', 'Books', 'XXX', 'Documentaries', 'Other', 'Apps', 'Music', 'TV', 'Movies'];
 
   const languageArray = ["english", "russian", "other", "german", "hindi"]
@@ -166,10 +175,10 @@ const upload = () => {
   { value: 'western', label: "Western" }, { value: 'short', label: "Short" }, { value: 'fantasy', label: "Fantasy" },
   { value: 'family', label: "Family" }]
 
-  console.log("sleect",selectedOption)
-  useEffect(()=>{
-setErrors({})
-  },[selectedOption])
+  console.log("sleect", selectedOption)
+  useEffect(() => {
+    setErrors({})
+  }, [selectedOption])
   console.log(selectedOption)
 
   return (
@@ -228,7 +237,7 @@ setErrors({})
                 <span className='text-red-400 text-[13px] '>{errors?.category_str}</span>
               </div>
 
-         
+
 
 
               <div>
@@ -248,63 +257,63 @@ setErrors({})
                 <span className='text-red-400 text-[13px] '>{errors?.type}</span>
               </div>
               <div >
-              <label htmlFor="hash" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Size (in Bytes)</label>
+                <label htmlFor="info_hash" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Size (in Bytes)</label>
 
 
-              <div className='flex relative'>
-                <input type="text" name="size" maxLength={11} id="hash" className="bg-gray-50 mb-2 relative border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="987897" value={formInput?.size} onChange={handleChange} />
-                <span className='text-[12px] absolute text-green-400  right-5 top-[12px]'>{formatBytes(formInput?.size)}</span>
+                <div className='flex relative'>
+                  <input type="text" name="size" maxLength={11} id="info_hash" className="bg-gray-50 mb-2 relative border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="987897" value={formInput?.size} onChange={handleChange} />
+                  <span className='text-[12px] absolute text-green-400  right-5 top-[12px]'>{formatBytes(formInput?.size)}</span>
+
+                </div>
+                <span className='text-red-400 text-[13px] '>{errors?.size}</span>
+
 
               </div>
-              <span className='text-red-400 text-[13px] '>{errors?.size}</span>
+              <div >
+                <label htmlFor="info_hash" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Imdb ID</label>
 
 
-            </div>
-            <div >
-              <label htmlFor="hash" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Imdb ID</label>
+                <div className='flex relative'>
+                  <input type="text" name="imdb" id="info_hash" className="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="tt34057778" value={formInput?.imdb} onChange={handleChange} />
 
 
-              <div className='flex relative'>
-                <input type="text" name="Imdb" id="hash" className="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="tt34057778" value={formInput?.Imdb} onChange={handleChange} />
+                </div>
+                <span className='text-red-400 text-[13px] '>{errors?.imdb}</span>
 
-                
+
               </div>
-              <span className='text-red-400 text-[13px] '>{errors?.Imdb}</span>
-
-
-            </div>
 
             </div>
             <div className="mb-6">
-                <label htmlFor="category_str" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Genre</label>
-                <Select
+              <label htmlFor="category_str" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Genre</label>
+              <Select
                 className="react-select-container"
                 classNamePrefix="react-select"
-                  defaultValue={selectedOption}
-                  onChange={setSelectedOption}
-                  isMulti={true}
-                  options={genre}
-                  isSearchable
-                  theme={(theme) => ({
-                    ...theme,
-                    colors: {
-                      ...theme.colors,
-                      primary25: '#55aa7b',
-                     
-                    },
-                  })}
+                defaultValue={selectedOption}
+                onChange={setSelectedOption}
+                isMulti={true}
+                options={genre}
+                isSearchable
+                theme={(theme) => ({
+                  ...theme,
+                  colors: {
+                    ...theme.colors,
+                    primary25: '#55aa7b',
 
-                />
-                <span className='text-red-400 text-[13px] '>{errors?.genre}</span>
-              </div>
+                  },
+                })}
+
+              />
+              <span className='text-red-400 text-[13px] '>{errors?.genre}</span>
+            </div>
 
 
             <div className="mb-6">
-              <label htmlFor="hash" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Thumbnail Images Urls</label>
+              <label htmlFor="info_hash" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Thumbnail Images Urls</label>
 
 
               <div className='flex relative'>
-                <input type="text" name="thumbnail" id="hash" className="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Thumbnail image url" value={formInput?.thumbnail} onChange={handleChange} />
+                <input type="text" name="thumbnail" id="info_hash" className="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Thumbnail image url" value={formInput?.thumbnail} onChange={handleChange} />
 
 
               </div>
@@ -314,12 +323,12 @@ setErrors({})
             </div>
 
             <div className="mb-6">
-              <label htmlFor="hash" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Add Images Urls</label>
+              <label htmlFor="info_hash" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Add Images Urls</label>
               {
-                fileInput.map((item, index) => {
+              fileInput&&  fileInput.map((item, index) => {
                   return (
                     <div key={index} className='flex relative'>
-                      <input type="text" name={"image" + index} id="hash" className="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Image url" value={formInput?.[`image${index}`]} onChange={(e) => {
+                      <input type="text" name={"image" + index} id="info_hash" className="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Image url" value={formInput?.[`image${index}`]||item} onChange={(e) => {
 
                         let _data = [...imageArray]
                         _data[index] = e.target.value;
@@ -337,16 +346,16 @@ setErrors({})
 
             </div>
             <div className="mb-6">
-              <label htmlFor="hash" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Torrent Hash</label>
-              <input type="text" name="hash" id="hash" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="309626C8000F9C006782B097E7B6EAADD7F7C3E7" value={formInput?.hash} onChange={handleChange} />
-              <span className='text-red-400 text-[13px] '>{errors?.hash}</span>
+              <label htmlFor="info_hash" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Torrent Hash</label>
+              <input type="text" name="info_hash" id="info_hash" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="309626C8000F9C006782B097E7B6EAADD7F7C3E7" value={formInput?.info_hash} onChange={handleChange} />
+              <span className='text-red-400 text-[13px] '>{errors?.info_hash}</span>
             </div>
 
             <div className="mb-6">
               <label htmlFor="tag" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Torrent Descriptions</label>
-              <textarea name="description" rows={6} id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={formInput?.description} onChange={handleChange} placeholder="" >
+              <textarea name="descr" rows={6} id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={formInput?.descr} onChange={handleChange} placeholder="" >
               </textarea>
-              <span className='text-red-400 text-[13px] '>{errors?.description}</span>
+              <span className='text-red-400 text-[13px] '>{errors?.descr}</span>
             </div>
 
             {/* <div className="flex items-start mb-6">
@@ -365,4 +374,4 @@ setErrors({})
   )
 }
 
-export default upload
+export default Upload
