@@ -106,9 +106,12 @@ const Home = () => {
             {
               data1.map((item, index) => {
                 return (
-                  <div key={index} onClick={() => router.push(`/get-posts/category:${item?.cat}?time=${item?.time}`)} className="cursor-pointer w-[150px] md:w-[195px] h-[115px] md:pl-[26px] md:pr-[161px] pt-7 pb-16 bg-off-white/10 rounded-lg border-off-white/30 flex-col justify-start items-center md:items-start gap-3.5 inline-flex hover:bg-primary/10 border-[1px] hover:border-primary/50 group">
+                  <div className='relative'>
+                     {item?.name==='XXX'? <div className='opacity-100 pl-[21px] pr-[21px] bg-[#6d806d7a] rounded-md absolute right-[37%] bottom-[37%] ' >&#x1F441;</div>:null}
+                    <div key={index} onClick={() => router.push(`/get-posts/category:${item?.cat}?time=${item?.time}`)} className={`cursor-pointer w-[150px] md:w-[195px] h-[115px] md:pl-[26px] md:pr-[161px] pt-7 pb-16 bg-off-white/10 rounded-lg border-off-white/30 flex-col justify-start items-center md:items-start gap-3.5 inline-flex hover:bg-primary/10 border-[1px] hover:border-primary/50 group ${item?.name==="XXX"?"opacity-25":""}`}>
                     <div className="w-[30px] h-[30px] p-[2.50px] justify-center items-center inline-flex text-off-white group-hover:text-primary">  <MovieSVG /></div>
                     <div className="text-off-white group-hover:text-primary text-opacity-80 text-[13px] w-20 text-center md:text-start leading-[0px] ">{item?.name}</div>
+                  </div>
                   </div>
                 )
               })}
