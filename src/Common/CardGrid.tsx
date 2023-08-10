@@ -1,6 +1,5 @@
 import React from 'react';
 import {useRouter } from 'next/navigation';
-
 export function formatBytes(bytes: number, decimals:number = 1) {
   if (!+bytes) return '0 Bytes'
 
@@ -18,15 +17,22 @@ interface CardProps {
   item: Record<string, any>;
   index: number;
   categoryId: string;
+  blur:Boolean;
+  setBlur:Function;
 }
 
 const CardExpanded = (props: CardProps) => {
-  console.log("pp",props)
+  console.log("pp",props?.blur)
   const router = useRouter();
   let name = props.item[`name`];
   let time = new Date(props.item[`timestamp`]);
   return (
   <div onClick={()=>{
+   
+    if( props?.blur==true){
+      props?.setBlur(false)
+      return;
+    }
     let slug =  name.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '');
      router.push(`/post-detail/${props.item?.eid}/${slug}/`)
   }} key={props.index} className="my-2 mx-3 overflow-hidden w-[190px] cursor-pointer py-2 bg-off-white/10 rounded-md flex-col justify-center inline-flex hover:bg-primary/10 border border-off-white/10 hover:border-primary/50">

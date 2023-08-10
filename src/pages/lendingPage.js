@@ -24,6 +24,7 @@ const LendingPage = () => {
   const [Filter, setFilter] = useState(false);
   const [page, setPage] = useState(1)
   const [loader, setLoader] = useState(false)
+  const[blur,setBlur]=useState(true)
 
   useEffect(() => {
 
@@ -121,49 +122,11 @@ const LendingPage = () => {
       </div>
 
 
-      {/* <div className='flex m-5 justify-center'>
-        <div className="flex bg-off-white/10 w-[50%] rounded-xl  justify-center align-middle p-2">
-          <span>Top 10 XXX</span>
-          <div className={`px-4 py-2 ${ListType === 'compact' ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
-    setListType('compact')
-  }} ><CompactList/></div>
-          <div className={`px-4 py-2 ${ListType === 'expanded' ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
-    setListType('expanded')
-  }} ><ExpandedList/></div>
-
-
-
-        </div>
-      </div> */}
-      {/* <div className='w-auto mb-[3rem] mx-4 md:mx-[9rem] bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
-
-        <div className={`flex-1 px-4 flex-wrap py-8 justify-center`}>
-          {movieList?.XXX?.map((item, index) => {
-            if (ListType === 'compact') {
-              return (
-                <Card item={item} categoryId={categoryId} />
-              )
-            } else {
-              return (
-                <CardGrid item={item} categoryId={categoryId} />
-              )
-            }
-          })}
-        </div>
-      </div> */}
 
       <div className='flex m-5 justify-center'>
         <div className="flex bg-off-white/10 w-[50%] rounded-xl  justify-center align-middle p-2">
           <span>Top 10 TV Shows</span>
-          {/* <div className={`px-4 py-2 ${ListType === 'compact' ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
-    setListType('compact')
-  }} ><CompactList/></div>
-          <div className={`px-4 py-2 ${ListType === 'expanded' ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
-    setListType('expanded')
-  }} ><ExpandedList/></div> */}
-
-
-
+   
         </div>
       </div>
       <div className='w-auto mb-[3rem] mx-4 md:mx-[9rem] bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
@@ -172,11 +135,11 @@ const LendingPage = () => {
           {movieList?.TV?.map((item, index) => {
             if (ListType === 'compact') {
               return (
-                <Card item={item} categoryId={categoryId} />
+                <Card item={item} categoryId={categoryId}  />
               )
             } else {
               return (
-                <CardGrid item={item} categoryId={categoryId} />
+                <CardGrid item={item} categoryId={categoryId}  />
               )
             }
           })}
@@ -187,13 +150,35 @@ const LendingPage = () => {
 
       <div className='flex m-5 justify-center'>
         <div className="flex bg-off-white/10 w-[50%] rounded-xl  justify-center align-middle p-2">
+          <span>Top 10 XXX</span>
+        </div>
+      </div>
+      <div className='w-auto mb-[3rem] mx-4 md:mx-[9rem] bg-off-white/10 relative text-center flex rounded-xl overflow-hidden'>
+      {blur? <div className='opacity-100 absolute bottom-[50%]  right-[43%] pl-[25px] pr-[25px] bg-[#4064407a] rounded-md m-auto flex justify-center ' onClick={()=>setBlur(false)} >Are You 18+&#x1F441;</div>:null}
+        <div >
+        
+          <div className={`flex-1 px-4 flex-wrap py-8 justify-center ${blur?"blur-md":""}`}>
+          {movieList?.XXX?.map((item, index) => {
+            if (ListType === 'compact') {
+              return (
+                <Card item={item} categoryId={categoryId} blur={blur} setBlur={setBlur}  />
+              )
+            } else {
+              return (
+                <CardGrid item={item} categoryId={categoryId} blur={blur} setBlur={setBlur} />
+              )
+            }
+          })}
+          </div>
+        </div>
+      </div>
+
+
+
+      <div className='flex m-5 justify-center'>
+        <div className="flex bg-off-white/10 w-[50%] rounded-xl  justify-center align-middle p-2">
           <span>Top 10 Music Torrents</span>
-          {/* <div className={`px-4 py-2 ${ListType === 'compact' ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
-    setListType('compact')
-  }} ><CompactList/></div>
-          <div className={`px-4 py-2 ${ListType === 'expanded' ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
-    setListType('expanded')
-  }} ><ExpandedList/></div> */}
+        
 
 
 
@@ -220,12 +205,7 @@ const LendingPage = () => {
       <div className='flex m-5 justify-center'>
         <div className="flex bg-off-white/10 w-[50%] rounded-xl  justify-center align-middle p-2">
           <span>Top 10 Books Torrents</span>
-          {/* <div className={`px-4 py-2 ${ListType === 'compact' ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
-    setListType('compact')
-  }} ><CompactList/></div>
-          <div className={`px-4 py-2 ${ListType === 'expanded' ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
-    setListType('expanded')
-  }} ><ExpandedList/></div> */}
+        
 
 
 
@@ -248,17 +228,14 @@ const LendingPage = () => {
         </div>
       </div>
 
+      
+
 
 
       <div className='flex m-5 justify-center'>
         <div className="flex bg-off-white/10 w-[50%] rounded-xl  justify-center align-middle p-2">
           <span>Top 10 Games Torrents</span>
-          {/* <div className={`px-4 py-2 ${ListType === 'compact' ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
-    setListType('compact')
-  }} ><CompactList/></div>
-          <div className={`px-4 py-2 ${ListType === 'expanded' ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
-    setListType('expanded')
-  }} ><ExpandedList/></div> */}
+        
 
 
 
@@ -285,12 +262,7 @@ const LendingPage = () => {
       <div className='flex m-5 justify-center'>
         <div className="flex bg-off-white/10 w-[50%] rounded-xl  justify-center align-middle p-2">
           <span>Top 10 Documentaries Torrents</span>
-          {/* <div className={`px-4 py-2 ${ListType === 'compact' ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
-    setListType('compact')
-  }} ><CompactList/></div>
-          <div className={`px-4 py-2 ${ListType === 'expanded' ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
-    setListType('expanded')
-  }} ><ExpandedList/></div> */}
+        
 
 
 
@@ -315,12 +287,7 @@ const LendingPage = () => {
       <div className='flex m-5 justify-center'>
         <div className="flex bg-off-white/10 w-[50%] rounded-xl  justify-center align-middle p-2">
           <span>Top 10 Apps Torrents</span>
-          {/* <div className={`px-4 py-2 ${ListType === 'compact' ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
-    setListType('compact')
-  }} ><CompactList/></div>
-          <div className={`px-4 py-2 ${ListType === 'expanded' ? 'text-primary bg-primary/30' : ''} rounded-xl cursor-pointer transition-all duration-200`} onClick={()=>{
-    setListType('expanded')
-  }} ><ExpandedList/></div> */}
+        
 
 
 
