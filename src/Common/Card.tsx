@@ -19,6 +19,7 @@ interface CardProps {
   index: number;
   categoryId: string;
   page:string;
+  blur:Boolean;
 }
 
 const Card = (props: CardProps) => {
@@ -27,7 +28,7 @@ const Card = (props: CardProps) => {
   let time = new Date(props.item[`timestamp`]);
   return (
   <div onClick={()=>{
-    if(props?.page ==="dashboard"){
+    if(props?.page ==="dashboard" || props?.blur){
       return;
     }
     let slug =  name.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '');
