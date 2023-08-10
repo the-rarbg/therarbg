@@ -61,8 +61,7 @@ const Dashboard = () => {
 
             return (
               <>
-                <Card item={item} categoryId={item?.category_str} />
-
+                <Card item={item} categoryId={item?.category_str} page="dashboard" />
               </>
 
             )
