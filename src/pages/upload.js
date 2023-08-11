@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { createTorrent } from '../service/service';
+import { createTorrent, updateTorrent } from '../service/service';
 import { Loader } from '../Common/Loader'
 import ToastMsg from '../Common/ToastMsg';
 import { useRouter } from 'next/router';
@@ -14,6 +14,7 @@ const Upload = () => {
   const [fileInput, setFileInput] = useState([{ name: "" }])
   const [imageArray, setImageArray] = useState([])
   const [errors, setErrors] = useState({})
+  const[eid,setEid]=useState("")
 
   const [selectedOption, setSelectedOption] = useState(null);
   const router = useRouter()
@@ -128,6 +129,107 @@ const Upload = () => {
     })
   }
 
+  const handleUpdated = (e) => {
+    e.preventDefault()
+    let _genre = []
+    _genre = selectedOption && selectedOption.map((item, index) => {
+      return item.value;
+    })
+    console.log("pp", _genre)
+
+
+    if (!formInput?.name) {
+      setErrors({ ...errors, name: "This is Mandatory Field" })
+      return
+    }
+    if (!formInput?.short_name) {
+      setErrors({ ...errors, short_name: "This is Mandatory Field" })
+      return
+    }
+    if (!formInput?.language) {
+      setErrors({ ...errors, language: "This is Mandatory Field" })
+      return
+    }
+    if (!formInput?.category_str) {
+      setErrors({ ...errors, category_str: "This is Mandatory Field" })
+      return
+    }
+    if (formInput?.category_str === "Movies" || formInput?.category_str === "TV") {
+      if (!selectedOption || selectedOption?.length === 0) {
+        setErrors({ ...errors, genre: "This is Mandatory Field" })
+        return
+      }
+
+    }
+
+    if (!formInput?.type) {
+      setErrors({ ...errors, type: "This is Mandatory Field" })
+      return
+    }
+    if (!formInput?.size) {
+      setErrors({ ...errors, size: "This is Mandatory Field" })
+      return
+    }
+    if (!formInput?.imdb) {
+      setErrors({ ...errors, imdb: "This is Mandatory Field" })
+      return
+    }
+    if (!formInput?.thumbnail) {
+      setErrors({ ...errors, thumbnail: "This is Mandatory Field" })
+      return
+    }
+    if (!formInput?.info_hash) {
+      setErrors({ ...errors, info_hash: "This is Mandatory Field" })
+      return
+    }
+    if (!formInput?.info_hash.length > 70) {
+      setErrors({ ...errors, info_hash: "Torrent Hash Length can not be greater than 70" })
+      return
+    }
+
+    if (!formInput?.descr) {
+      setErrors({ ...errors, descr: "This is Mandatory Field" })
+      return
+    }
+
+    let data = {
+      eid:formInput?.eid,
+      name: formInput?.name,
+      category_str: formInput?.category_str,
+      short_name: formInput?.short_name,
+      descr: formInput?.descr,
+
+      type: formInput?.type,
+      genre: _genre,
+      language: formInput?.language,
+      size: formInput?.size,
+      size_char: formatBytes(formInput?.size),
+      thumbnail: formInput?.thumbnail,
+      images: imageArray,
+      imdb: formInput?.imdb,
+      downloads: 1,
+      seeders: 1,
+      leechers: 1,
+      info_hash: formInput?.info_hash,
+    }
+    setLoader(true)
+    updateTorrent(data, token).then((res) => {
+      setLoader(false)
+      console.log(res)
+      ToastMsg("Torrent Updated Successfully", "success")
+      router.push("/lendingPage/")
+    }).catch((err) => {
+      setLoader(false)
+
+      if (err?.response?.status === 401) {
+        ToastMsg("Session Expired !!", "error")
+        localStorage.clear()
+        window.location.href = "/login"
+      }
+      console.log(err)
+    })
+  }
+
 
   console.log("pppp", errors)
   const handleChange = (e) => {
@@ -189,7 +291,14 @@ const Upload = () => {
         <div className='text-center justify-center mt-2'> <span className='text-[16px]  font-bold mt-3 pt-3'>You can get Image URL from : <a href="https://freeimage.host/" target="_blank">https://freeimage.host/</a></span>  </div>
         <div className="mt-[3rem] justify-center pt-5 pb-2 bg-gray-200 bg-opacity-10 rounded-lg border-gray-200 border-opacity-30 flex relative">
 
-          <form onSubmit={handleUpload} className='w-[85%]'>
+          <form onSubmit={(e)=>{
+            if(formInput?.eid){
+              handleUpdated(e)
+            }
+            else{
+            handleUpload(e)
+            }
+            }} className='w-[85%]'>
             <div className="grid gap-6 mb-6 md:grid-cols-2">
               <div>
                 <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title name</label>
