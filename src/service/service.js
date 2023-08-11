@@ -90,3 +90,12 @@ export const  createTorrent  = (data,token)=>{
     "Authorization":"Bearer "+token
   } })
 }
+
+
+export const  updateTorrent  = (data,token)=>{
+  let url = `${API_BASE}/api/v1/get-trb-post/b5/`
+  return axios.put(url, data,{ headers: {
+    "Content-Type": "application/json",
+    "Authorization":"Bearer "+token
+  } })
+}
