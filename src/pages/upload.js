@@ -14,19 +14,30 @@ const Upload = () => {
   const [fileInput, setFileInput] = useState([{ name: "" }])
   const [imageArray, setImageArray] = useState([])
   const [errors, setErrors] = useState({})
-  const[eid,setEid]=useState("")
 
-  const [selectedOption, setSelectedOption] = useState(null);
+
+  const [selectedOption, setSelectedOption] = useState([]);
   const router = useRouter()
   const { data } = router.query;
   useEffect(() => {
     let temp = data && JSON.parse(data)
+
+    const _data = temp && temp?.genre.map((item, index) => {
+      return { value:item, label:item };
+    })
     setFormInput(temp)
     setImageArray(temp?.images)
     setSelectedOption(temp?.genre)
     setFileInput(temp?.images)
+
+   
+  setSelectedOption(_data)
     return setToken(localStorage.getItem("access_token"));
   }, [])
+useEffect(()=>{
+
+},[])
+
   console.log("formInput", formInput)
   console.log("select", selectedOption)
   const handleUpload = (e) => {
@@ -119,7 +130,6 @@ const Upload = () => {
       router.push("/lendingPage/")
     }).catch((err) => {
       setLoader(false)
-
       if (err?.response?.status === 401) {
         ToastMsg("Session Expired !!", "error")
         localStorage.clear()
@@ -229,6 +239,8 @@ const Upload = () => {
       console.log(err)
     })
   }
+
+  
 
 
   console.log("pppp", errors)
@@ -393,13 +405,14 @@ const Upload = () => {
               </div>
 
             </div>
-            <div className="mb-6">
-              <label htmlFor="category_str" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Genre</label>
+            <div className="mb-6 text-white">
+              <label htmlFor="category_str" className="block mb-2 text-sm font-medium text-white dark:text-white">Genre</label>
               <Select
-                className="react-select-container"
+                className="react-select-container "
                 classNamePrefix="react-select"
                 defaultValue={selectedOption}
                 onChange={setSelectedOption}
+              
                 isMulti={true}
                 options={genre}
                 isSearchable
@@ -408,7 +421,7 @@ const Upload = () => {
                   colors: {
                     ...theme.colors,
                     primary25: '#55aa7b',
-
+  
                   },
                 })}
 
