@@ -3,8 +3,8 @@ import { usePathname, useRouter } from 'next/navigation';
 
 const cRoutes = [
   {
-    path: ["lendingPage"],
-    route: "/lendingPage",
+    path: [""],
+    route: "/",
     title: "Home",
   },
   {
@@ -15,7 +15,7 @@ const cRoutes = [
   {
     path: ["get-posts"],
     route: "/get-posts/category:Movies/",
-    title: "Movies",
+    title: "Browse",
   },
   {
     path: ["upload"],
@@ -23,9 +23,9 @@ const cRoutes = [
     title: "Upload",
   },
   {
-    path: ["about-us"],
-    route: "/about-us/",
-    title: "About Us",
+    path: ["dashboard"],
+    route: "/dashboard/",
+    title: "Dashboard",
   }
 ];
 
@@ -52,12 +52,13 @@ useEffect(()=>{
 
       <div className='hidden md:flex mx-auto font-normal items-center'>
         {cRoutes.map((obj, i) => (
-          <div className={`px-6 uppercase cursor-pointer font-normal ${obj.path.includes(cRouter[1] || "0") ? "border-b-2 border-primary" : ""} h-full flex items-center`} onClick={()=>
+          <div  className={`px-6 uppercase cursor-pointer font-normal ${obj.path.includes(cRouter[1] || "0") ? "border-b-2 border-primary" : ""} h-full flex items-center ${(!token && i===4)?'hidden':""} `} onClick={()=>
           {
             let temp = token?false:true
             if(i===3&&temp){
              window.location.href=`/login`;
             } 
+            
             else{
             route.push(`${obj.route}`);
             }
