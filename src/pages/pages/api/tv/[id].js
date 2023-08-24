@@ -1,4 +1,5 @@
-import { getTvCasts, getTvDetail } from '../../../lib/tmdb'
+
+import { getTvDetail ,getTvCasts} from "../../../lib/tmdb"
 
 export default async function handler(req, res) {
   const { id } = req.query

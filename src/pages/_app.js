@@ -1,4 +1,4 @@
-import '../styles/global.scss';
+import '../styles/global.css';
 import React from 'react';
 import Layout from "../layouts/layout"
 import { ToastContainer } from 'react-toastify';
