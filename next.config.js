@@ -1,9 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
+  enabled: false,
 });
 
 module.exports = withBundleAnalyzer({
+  pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
   images: {
     domains: ['i.therarbg.com','localhost'],
   },

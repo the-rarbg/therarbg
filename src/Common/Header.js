@@ -1,6 +1,7 @@
 import React, {  useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
+
 const cRoutes = [
   {
     path: [""],
@@ -12,6 +13,7 @@ const cRoutes = [
     route: "/search",
     title: "Search",
   },
+ 
   {
     path: ["get-posts"],
     route: "/get-posts/category:Movies/",
@@ -26,7 +28,17 @@ const cRoutes = [
     path: ["dashboard"],
     route: "/dashboard/",
     title: "Dashboard",
-  }
+  },
+  {
+    path: ["pages/movie"],
+    route: "/pages/movie",
+    title: "MOVIE",
+  },
+  {
+    path: ["pages/tv"],
+    route: "/pages/tv",
+    title: "TV",
+  },
 ];
 
 
