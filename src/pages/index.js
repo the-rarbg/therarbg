@@ -1,12 +1,11 @@
 
 import React from 'react'
-import LendingPage from "src/pages/lendingPage.js"
+import LendingPage from "../pages/lendingPage"
 
 
 
 
 const Index = () => {
-
 
 
   return (

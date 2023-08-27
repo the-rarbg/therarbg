@@ -4,7 +4,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 module.exports = withBundleAnalyzer({
-  pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
+  
   images: {
     domains: ['i.therarbg.com','localhost'],
   },
