@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import ProfilePic from '../assets/image-avatar2.jpg'
+//import ProfilePic from '../assets/image-avatar2.jpg'
 import AppLogo from './icons/AppIcon'
 import IconNavHome from './icons/IconNavHome'
 import IconNavMovie from './icons/IconNavMovie'
@@ -36,7 +36,7 @@ export default function Navigation() {
       <div className='flex items-center justify-center rounded-full bg-cyan-200 p-px'>
         <Image
           className='rounded-full'
-          src={ProfilePic}
+          src={""}
           alt='user avatar'
           height={25}
           width={25}
