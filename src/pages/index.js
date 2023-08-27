@@ -8,7 +8,6 @@ import LendingPage from "../pages/lendingPage"
 const Index = () => {
 
 
-
   return (
   <>
   <LendingPage/>
